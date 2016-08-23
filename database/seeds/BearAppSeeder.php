@@ -1,7 +1,6 @@
 <?php
-namespace database\seeds\BearAppSeeder;
 use Illuminate\Database\Seeder;
-
+use App\models\Bear;
 class BearAppSeeder extends Seeder
 {
     /**
@@ -13,10 +12,10 @@ class BearAppSeeder extends Seeder
     {
         // clear our database ------------------------------------------
         DB::table('bears')->delete();
-        DB::table('fish')->delete();
-        DB::table('picnics')->delete();
-        DB::table('trees')->delete();
-        DB::table('bears_picnics')->delete();
+        //DB::table('fish')->delete();
+       //DB::table('picnics')->delete();
+        //DB::table('trees')->delete();
+       // DB::table('bears_picnics')->delete();
 
         // seed our bears table -----------------------
         // we'll create three different bears
@@ -49,7 +48,7 @@ class BearAppSeeder extends Seeder
         // our fish wont have names... because theyre going to be eaten
 
         // we will use the variables we used to create the bears to get their id
-
+        /*
         Fish::create(array(
             'weight'  => 5,
             'bear_id' => $bearLawly->id
@@ -101,7 +100,7 @@ class BearAppSeeder extends Seeder
 
         $bearAdobot->picnics()->attach($picnicYellowstone->id);
         $bearAdobot->picnics()->attach($picnicGrandCanyon->id);
-
+        */
         $this->command->info('They are terrorizing picnics!');
 
     }

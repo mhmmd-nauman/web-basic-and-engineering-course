@@ -1,5 +1,5 @@
 <?php
-
+namespace App\models;
 class Tree extends Eloquent {
     
     // MASS ASSIGNMENT -------------------------------------------------------

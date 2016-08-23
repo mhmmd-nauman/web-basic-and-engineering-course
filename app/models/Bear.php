@@ -1,7 +1,8 @@
-// app/models/Bear.php
 <?php
+namespace App\models;
+use Illuminate\Database\Eloquent\Model;
 
-class Bear extends Eloquent {
+class Bear extends Model {
     
     // MASS ASSIGNMENT -------------------------------------------------------
     // define which attributes are mass assignable (for security)
