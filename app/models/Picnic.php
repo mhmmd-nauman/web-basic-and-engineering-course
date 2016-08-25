@@ -13,7 +13,7 @@ class Picnic extends Model {
     // define a many to many relationship
     // also call the linking table
     public function bears() {
-        return $this->belongsToMany('Bear', 'bears_picnics', 'picnic_id', 'bear_id');
+        return $this->belongsToMany('App\models\Bear', 'bears_picnics', 'picnic_id', 'bear_id');
     }
 
 }

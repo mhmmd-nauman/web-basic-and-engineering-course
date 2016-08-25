@@ -12,18 +12,18 @@ class Bear extends Model {
     // DEFINE RELATIONSHIPS --------------------------------------------------
     // each bear HAS one fish to eat
     public function fish() {
-        return $this->hasOne('Fish'); // this matches the Eloquent model
+        return $this->hasOne('App\models\Fish'); // this matches the Eloquent model
     }
 
     // each bear climbs many trees
     public function trees() {
-        return $this->hasMany('Tree');
+        return $this->hasMany('App\models\Tree');
     }
 
     // each bear BELONGS to many picnic
     // define our pivot table also
     public function picnics() {
-        return $this->belongsToMany('Picnic', 'bears_picnics', 'bear_id', 'picnic_id');
+        return $this->belongsToMany('App\models\Picnic', 'bears_picnics', 'bear_id', 'picnic_id');
     }
 
 }
