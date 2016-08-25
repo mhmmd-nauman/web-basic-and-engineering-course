@@ -1,6 +1,7 @@
 <?php
 namespace App\models;
-class Fish extends Eloquent {
+use Illuminate\Database\Eloquent\Model;
+class Fish extends Model {
     
     // MASS ASSIGNMENT -------------------------------------------------------
     // define which attributes are mass assignable (for security)

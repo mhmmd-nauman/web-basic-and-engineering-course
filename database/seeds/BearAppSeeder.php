@@ -12,12 +12,12 @@ class BearAppSeeder extends Seeder
     {
         // clear our database ------------------------------------------
         DB::table('bears')->delete();
-        //DB::table('fish')->delete();
-       //DB::table('picnics')->delete();
-        //DB::table('trees')->delete();
-       // DB::table('bears_picnics')->delete();
+      //  DB::table('fish')->delete();
+        //DB::table('picnics')->delete();
+     //   DB::table('trees')->delete();
+     //   DB::table('bears_picnics')->delete();
 
-        // seed our bears table -----------------------
+        //seed our bears table -----------------------
         // we'll create three different bears
 
         // bear 1 is named Lawly. She is extremely dangerous. Especially when hungry.
@@ -48,8 +48,8 @@ class BearAppSeeder extends Seeder
         // our fish wont have names... because theyre going to be eaten
 
         // we will use the variables we used to create the bears to get their id
-        /*
-        Fish::create(array(
+        
+       /* Fish::create(array(
             'weight'  => 5,
             'bear_id' => $bearLawly->id
         ));

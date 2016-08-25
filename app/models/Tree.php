@@ -1,6 +1,8 @@
 <?php
 namespace App\models;
-class Tree extends Eloquent {
+use Illuminate\Database\Eloquent\Model;
+
+class Tree extends Model {
     
     // MASS ASSIGNMENT -------------------------------------------------------
     // define which attributes are mass assignable (for security)

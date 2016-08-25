@@ -1,6 +1,8 @@
 <?php
 namespace App\models;
-class Picnic extends Eloquent {
+use Illuminate\Database\Eloquent\Model;
+
+class Picnic extends Model {
     
     // MASS ASSIGNMENT -------------------------------------------------------
     // define which attributes are mass assignable (for security)
