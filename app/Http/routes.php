@@ -11,16 +11,24 @@
 |
 */
 
-;
-
-
+//Route::get('/',function(){
+//    return "<h1>Base Route</h>"; 
+//});
+//
 
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+   
+   Route::get('/', 'HomeController@index');
+
     Route::auth();
-    Route::get('/beers', ['as' => 'beers.list', 'uses' => 'BeerController@index']);
-    Route::get('/home', 'HomeController@index');
+    Route::get('/bear','bearController@getbear');
+    Route::get('/picnic','bearController@getpicnic');
+    Route::get('/fish','bearController@getfish');
+    Route::get('/tree','bearController@gettree');
+   
 });
+//Route::auth();
+//
+//Route::get('/', 'HomeController@index');
+//Route::get('/bear','bearController@getbear');

@@ -23,56 +23,89 @@
         .fa-btn {
             margin-right: 6px;
         }
+        
+        .navbar-default{background-color:#ac2925}
+        
     </style>
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-static-top" >
         <div class="container">
-            <div class="navbar-header">
+            <div class=" navbar-header " id="nav" >
 
                 <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                <a class="navbar-brand glyphicon glyphicon-star" style=" color: white ;font-size: 23px;" href="{{ url('/') }}">
+                    Bear Project
                 </a>
             </div>
 
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+            <div class="collapse navbar-collapse" id="app-navbar-collapse" >
                 <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
+<!--                <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
-                </ul>
+                </ul>-->
 
                 <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" style=" width: 60%;">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
+                    <li style=" margin-left: 50%;"><a href="{{ url('/login') }}" style=" color: white ;font-size: 23px;" class=" glyphicon glyphicon-user"> Login</a></li>
+                    <li style=" float: right;"><a href="{{ url('/register') }}" style=" color: white ;font-size: 23px;" class=" glyphicon glyphicon-plus"> Register</a></li>
                     @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                    
+                    <li class="dropdown" style=" color: white; font-size: 23px;width: 30%;">
+                         <div class="dropdown" style=" float: left; margin-top: 5%; margin-right:10px; ">
+                             <button class="btn btn-primary dropdown-toggle  glyphicon glyphicon-search" style=" background-color: #d43f3a" type="button" data-toggle="dropdown"> View Record 
+                            <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{url('/bear')}}">Bears Record</a></li>
+                                    <li><a href="#">Bears-Picnic Record</a></li>
+                                    <li><a href="{{url('/fish')}}">Fish Record</a></li>
+                                    <li><a href="{{url('/picnic')}}">Picnic Record</a></li>
+                                    <li><a href="{{url('/tree')}}">Tree Record</a></li>
+                                </ul>
+                         </div>
+                    </li>
+                    <li style=" color: white; font-size: 23px;width: 30%;">
+                        <div class="dropdown" style=" float: left; margin-top: 5%; ">
+                            <button class="btn btn-primary dropdown-toggle glyphicon glyphicon-pencil" style=" background-color: #d43f3a" type="button" data-toggle="dropdown"> Insert New Record
+                            <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Insert Bears Record</a></li>
+                                    <li><a href="#">Insert Bears-Picnic Record</a></li>
+                                    <li><a href="#">Insert Fish Record</a></li>
+                                    <li><a href="#">Insert Picnic Record</a></li>
+                                    <li><a href="#">Insert Tree Record</a></li>
+                                </ul>
+                        </div>
+                    </li>
+                    <li style=" color: white; font-size: 23px;width: 33%;">
+                        <div style=" float: right; ">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"  style=" color: white; font-size: 23px; float: right" role="button" aria-expanded="false">
+                                {{ Auth::user()->name }} <span class="caret" ></span>
                             </a>
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            <ul class="dropdown-menu" role="menu" style=" float: right;">
+                                <li style="background-color: black; float: right"><a href="{{ url('/logout') }}" style=" color: white ;font-size: 23px;"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
-                        </li>
+                        </div>
+                    </li>
                     @endif
                 </ul>
+            </div>
+                        
+                        
+                  
             </div>
         </div>
     </nav>
 
     @yield('content')
+    
+   
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
