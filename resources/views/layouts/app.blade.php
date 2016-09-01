@@ -69,19 +69,7 @@
                                 </ul>
                          </div>
                     </li>
-                    <li style=" color: white; font-size: 23px;width: 30%;">
-                        <div class="dropdown" style=" float: left; margin-top: 5%; ">
-                            <button class="btn btn-primary dropdown-toggle glyphicon glyphicon-pencil" style=" background-color: #d43f3a" type="button" data-toggle="dropdown"> Insert New Record
-                            <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Insert Bears Record</a></li>
-                                    <li><a href="#">Insert Bears-Picnic Record</a></li>
-                                    <li><a href="#">Insert Fish Record</a></li>
-                                    <li><a href="#">Insert Picnic Record</a></li>
-                                    <li><a href="#">Insert Tree Record</a></li>
-                                </ul>
-                        </div>
-                    </li>
+                  
                     <li style=" color: white; font-size: 23px;width: 33%;">
                         <div style=" float: right; ">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"  style=" color: white; font-size: 23px; float: right" role="button" aria-expanded="false">
@@ -102,9 +90,9 @@
             </div>
         </div>
     </nav>
-
+    <div class=" container">
     @yield('content')
-    
+    </div>
    
 
     <!-- JavaScripts -->

@@ -26,7 +26,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/picnic','bearController@getpicnic');
     Route::get('/fish','bearController@getfish');
     Route::get('/tree','bearController@gettree');
-   
+    Route::post('/submit','bearController@add_bear');
 });
 //Route::auth();
 //
