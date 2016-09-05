@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Bear;
 use App\Http;
 
+use App\models\Fish;
+
 class bearController extends Controller
 {
     //
