@@ -22,6 +22,7 @@ Route::group(['middleware' => 'web'], function () {
    Route::get('/', 'HomeController@index');
 
     Route::auth();
+    Route::get('/bearf','bearController@index');
     Route::get('/bear','bearController@getbear');
     Route::get('/picnic','bearController@getpicnic');
     Route::get('/fish','bearController@getfish');
