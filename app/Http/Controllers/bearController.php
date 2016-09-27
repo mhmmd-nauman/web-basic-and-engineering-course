@@ -56,7 +56,7 @@ echo 'Logged in as ' . $me->getName();
         return view('my.picnic', ['users' => $users]);
     }
      public function getfish(){
-        $users = DB::table('fish1')->get();
+        $users = DB::table('fish')->get();
 
         return view('my.fish', ['users' => $users]);
     }

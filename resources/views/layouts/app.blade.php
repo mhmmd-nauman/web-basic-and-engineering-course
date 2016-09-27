@@ -70,6 +70,20 @@
                                 </ul>
                          </div>
                     </li>
+                    
+                    <li class="dropdown" style=" color: white; font-size: 23px;width: 30%;">
+                         <div class="dropdown" style=" float: left; margin-top: 5%; margin-right:10px; ">
+                             <button class="btn btn-primary dropdown-toggle  glyphicon glyphicon-search" style=" background-color: #d43f3a" type="button" data-toggle="dropdown"> User Auhentication 
+                            <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ url('/home') }}">Home</a></li>
+                                    <li><a href="{{ route('users.index') }}">Users</a></li>
+                                    <li><a href="{{ route('roles.index') }}">Roles</a></li>
+                                    <li><a href="{{ route('itemCRUD2.index') }}">Items</a></li>
+                                    
+                                </ul>
+                         </div>
+                    </li>
                   
                     <li style=" color: white; font-size: 23px;width: 33%;">
                         <div style=" float: right; ">
