@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
           Eloquent::unguard();
           $this->call(BearAppSeeder::class);
           $this->command->info('Bear app seeds finished.'); // show information in the command line after everything is run
-   
+          $this->call(PermissionTableSeeder::class);
+          $this->command->info('Permission app seeds finished.');
     }
 }
 
