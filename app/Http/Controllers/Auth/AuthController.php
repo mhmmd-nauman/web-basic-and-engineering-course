@@ -52,7 +52,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'contact' => 'required|max:255',
-            'dob' => 'required|max:255',
+            //'dob' => 'required|max:255',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -68,8 +68,8 @@ class AuthController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'contact' => $data['contact'],
-            'dob' => date("Y-m-d",  strtotime($data['dob'])),
+            //'contact' => $data['contact'],
+            //'dob' => date("Y-m-d",  strtotime($data['dob'])),
             'password' => bcrypt($data['password']),
         ]);
     }

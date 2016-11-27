@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>NCBA&E Campus System </title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
@@ -13,6 +13,18 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+   
+    <!-- Angular JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-route.min.js"></script>
+    <!-- MY App -->
+    <script src="{{ asset('/app/packages/dirPagination.js') }}"></script>
+    <script src="{{ asset('/app/routes.js') }}"></script>
+    <script src="{{ asset('/app/services/myServices.js') }}"></script>
+    <script src="{{ asset('/app/helper/myHelper.js') }}"></script>
+    <!-- App Controller -->
+    <script src="{{ asset('/app/controllers/ItemController.js') }}"></script>
+    
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
   
@@ -29,26 +41,17 @@
         
     </style>
 </head>
-<body id="app-layout">
+<body id="app-layout" ng-app="main-App">
     <nav class="navbar navbar-default navbar-static-top" >
         <div class="container">
             <div class=" navbar-header " id="nav" >
-
                 <!-- Collapsed Hamburger -->
-                
-
                 <!-- Branding Image -->
                 <a class="navbar-brand glyphicon glyphicon-star" style=" color: white ;font-size: 23px;" href="{{ url('/') }}">
-                    Bear Project
+                    Dashboard
                 </a>
             </div>
-
             <div class="collapse navbar-collapse" id="app-navbar-collapse" >
-                <!-- Left Side Of Navbar -->
-<!--                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
-                </ul>-->
-
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right" style=" width: 60%;">
                     <!-- Authentication Links -->
@@ -59,14 +62,15 @@
                     
                     <li class="dropdown" style=" color: white; font-size: 23px;width: 30%;">
                          <div class="dropdown" style=" float: left; margin-top: 5%; margin-right:10px; ">
-                             <button class="btn btn-primary dropdown-toggle  glyphicon glyphicon-search" style=" background-color: #d43f3a" type="button" data-toggle="dropdown"> View Record 
+                             <button class="btn btn-primary dropdown-toggle  glyphicon glyphicon-search" style=" background-color: #d43f3a" type="button" data-toggle="dropdown"> Modules 
                             <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{url('/bear')}}">Bears Record</a></li>
-                                    <li><a href="#">Bears-Picnic Record</a></li>
-                                    <li><a href="{{url('/fish')}}">Fish Record</a></li>
-                                    <li><a href="{{url('/picnic')}}">Picnic Record</a></li>
-                                    <li><a href="{{url('/tree')}}">Tree Record</a></li>
+                                    <li><a href="{{url('/visitor')}}">Visitors</a></li>
+                                    <li><a href="{{url('/bear')}}">Students</a></li>
+                                    <li><a href="#">Faculty</a></li>
+                                    <li><a href="{{url('/fish')}}">Admissions</a></li>
+                                    <li><a href="{{url('/picnic')}}">Programs</a></li>
+                                    <li><a href="{{url('/tree')}}">Department</a></li>
                                 </ul>
                          </div>
                     </li>
@@ -90,7 +94,6 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"  style=" color: white; font-size: 23px; float: right" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret" ></span>
                             </a>
-
                             <ul class="dropdown-menu" role="menu" style=" float: right;">
                                 <li style="background-color: black; float: right"><a href="{{ url('/logout') }}" style=" color: white ;font-size: 23px;"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
@@ -106,6 +109,7 @@
         </div>
     </nav>
     <div class=" container">
+    <ng-view></ng-view>
     @yield('content')
     </div>
    
@@ -114,14 +118,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-  <script>
-  $( function() {
-    $( "#datepicker" ).datepicker();
-  } );
-  </script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script>
+    $( function() {
+      $( "#datepicker" ).datepicker();
+    } );
+    </script>
 </body>
 </html>

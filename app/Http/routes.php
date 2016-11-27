@@ -18,11 +18,16 @@
 
 
 Route::group(['middleware' => 'web'], function () {
-   
+   Route::resource('items', 'ItemController');
    Route::get('/', 'HomeController@index');
 
     Route::auth();
     Route::get('/bearf','bearController@index');
+    // visitor routes
+    Route::get('/visitor','VisitorController@getvisitor');
+    Route::get('/visitor-export-excel','VisitorController@export_visitor');
+    Route::post('/add_visitor','VisitorController@add_visitor');
+    // end of visitor routes
     Route::get('/bear','bearController@getbear');
     Route::get('/picnic','bearController@getpicnic');
     Route::get('/fish','bearController@getfish');
@@ -30,7 +35,14 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/submit','bearController@add_bear');
 });
 
-
+Route::group(array('prefix'=>'/templates/'),function(){
+    Route::get('{template}', array( function($template)
+    {
+        $template = str_replace(".html","",$template);
+        View::addExtension('html','php');
+        return View::make('templates.'.$template);
+    }));
+});
 
 Route::auth();
 

@@ -51,19 +51,7 @@
                             </div>
                         </div>
                         
-                        <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
-                            <label for="dob" class="col-md-4 control-label">DOB</label>
-
-                            <div class="col-md-6">
-                                <input id="datepicker" type="text" class="form-control" name="dob" value="{{ old('dob') }}">
-
-                                @if ($errors->has('dob'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('dob') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                        
                         
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
