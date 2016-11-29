@@ -20,6 +20,7 @@
 Route::group(['middleware' => 'web'], function () {
    Route::resource('items', 'ItemController');
    Route::get('/', 'HomeController@index');
+   Route::get('/visitor-export-pdf', 'VisitorController@export_visitor_pdf');
 
     Route::auth();
     Route::get('/bearf','bearController@index');

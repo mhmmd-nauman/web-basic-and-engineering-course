@@ -48,7 +48,7 @@
                 <!-- Collapsed Hamburger -->
                 <!-- Branding Image -->
                 <a class="navbar-brand glyphicon glyphicon-star" style=" color: white ;font-size: 23px;" href="{{ url('/') }}">
-                    Dashboard
+                    Project-A3I
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="app-navbar-collapse" >
@@ -57,7 +57,7 @@
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                     <li style=" margin-left: 50%;"><a href="{{ url('/login') }}" style=" color: white ;font-size: 23px;" class=" glyphicon glyphicon-user"> Login</a></li>
-                    <li style=" float: right;"><a href="{{ url('/register') }}" style=" color: white ;font-size: 23px;" class=" glyphicon glyphicon-plus"> Register</a></li>
+                    <!--<li style=" float: right;"><a href="{{ url('/register') }}" style=" color: white ;font-size: 23px;" class=" glyphicon glyphicon-plus"> Register</a></li>-->
                     @else
                     
                     <li class="dropdown" style=" color: white; font-size: 23px;width: 30%;">
@@ -66,15 +66,15 @@
                             <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
                                     <li><a href="{{url('/visitor')}}">Visitors</a></li>
-                                    <li><a href="{{url('/bear')}}">Students</a></li>
+                                    <li><a href="#{{url('/student')}}">Students</a></li>
                                     <li><a href="#">Faculty</a></li>
-                                    <li><a href="{{url('/fish')}}">Admissions</a></li>
-                                    <li><a href="{{url('/picnic')}}">Programs</a></li>
-                                    <li><a href="{{url('/tree')}}">Department</a></li>
+                                    <li><a href="#{{url('/admission')}}">Admissions</a></li>
+                                    <li><a href="#{{url('/program')}}">Programs</a></li>
+                                    <li><a href="#{{url('/department')}}">Department</a></li>
                                 </ul>
                          </div>
                     </li>
-                    
+                    <!--
                     <li class="dropdown" style=" color: white; font-size: 23px;width: 30%;">
                          <div class="dropdown" style=" float: left; margin-top: 5%; margin-right:10px; ">
                              <button class="btn btn-primary dropdown-toggle  glyphicon glyphicon-search" style=" background-color: #d43f3a" type="button" data-toggle="dropdown"> User Auhentication 
@@ -88,14 +88,16 @@
                                 </ul>
                          </div>
                     </li>
-                  
-                    <li style=" color: white; font-size: 23px;width: 33%;">
-                        <div style=" float: right; ">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"  style=" color: white; font-size: 23px; float: right" role="button" aria-expanded="false">
+                    -->
+                    <li style=" color: white; width: 33%; margin-top: 20px;" class="pull-right">
+                        <div style=" ">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"  style=" color: white;" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret" ></span>
                             </a>
-                            <ul class="dropdown-menu" role="menu" style=" float: right;">
-                                <li style="background-color: black; float: right"><a href="{{ url('/logout') }}" style=" color: white ;font-size: 23px;"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            <ul class="dropdown-menu" role="menu" style="">
+                                <li style="">
+                                    <a href="{{ url('/logout') }}" style=""><i class="fa fa-btn fa-sign-out"></i>Logout</a>
+                                </li>
                             </ul>
                         </div>
                     </li>

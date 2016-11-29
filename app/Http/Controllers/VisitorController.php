@@ -12,6 +12,7 @@ use App\models\Fish;
 use App;
 use Auth;
 use Excel;
+use PDF;
 
 class VisitorController extends Controller
 {
@@ -22,9 +23,44 @@ class VisitorController extends Controller
     public function index(){
 
     }
-    public function getvisitor(){
+    public function getvisitor(Request $request){
+        //echo $request->load;
+        $user_id = Auth::user()->id;
+        switch($request->load){
+            case'yesterday':
+                $report_title = 'Yesterday - Mine';
+                $students = Visitor::where('dealtby_id','=',$user_id)
+                    ->whereDate('created_at', '=', date('Y-m-d',  strtotime("-1 day")))->get();
+                break;
+            case'last7day':
+                $report_title = 'Last 7 Days - Mine';
+                $students = Visitor::where('dealtby_id','=',$user_id)
+                    ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-30 day")))->get();
+                break;
+            case'last30day':
+                $report_title = 'Last 30 Days - Mine';
+                $students = Visitor::where('dealtby_id','=',$user_id)
+                    ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-7 day")))->get();
+                break;
+            case'viewalldata':
+                $report_title = 'View All Data';
+                $students = Visitor::all();
+                break;
+            default:
+                $report_title = 'Today - Mine';
+                $students = Visitor::where('dealtby_id','=',$user_id)
+                    ->whereDate('created_at', '=', date('Y-m-d'))->get();
+        }
+        //$students = DB::table('students')->get();
+        return view('visitors.list_visitors', compact('students'),['report_title'=>$report_title]);
+    }
+    public function export_visitor_pdf(){
+        //$pdf = App::make('dompdf.wrapper');
+        //$pdf->loadHTML('<h1>Test</h1>');
+        //return $pdf->stream();
         $students = DB::table('students')->get();
-        return view('visitors.list_visitors', compact('students'));
+        $pdf = PDF::loadView('visitors.list_visitors_pdf', compact('students'));
+        return $pdf->download('VisitrsReport.pdf');
     }
     public function export_visitor(){
         //http://laraveldaily.com/laravel-excel-export-eloquent-models-results-easily/
@@ -54,13 +90,14 @@ class VisitorController extends Controller
     
     public function add_visitor(Request $request){
         $visitor = new Visitor();
-        $visitor->first_name =$request->get('first_name');
-        $visitor->last_name = $request->get('last_name');
-        $visitor->program=$request->get('program');
-        $visitor->visit_type=$request->get('visit_type');
-        $visitor->information_source=$request->get('information_source');
-        $visitor->mobile=$request->get('mobile');
-        $visitor->dealt_by = Auth::user()->name;
+        $visitor->first_name = $request->get('first_name');
+        $visitor->last_name  = $request->get('last_name');
+        $visitor->program    = $request->get('program');
+        $visitor->visit_type = $request->get('visit_type');
+        $visitor->information_source = $request->get('information_source');
+        $visitor->mobile     = $request->get('mobile');
+        $visitor->dealtby_id = Auth::user()->id;
+        $visitor->dealt_by   = Auth::user()->name;
         $visitor->save();
         return back();
     }

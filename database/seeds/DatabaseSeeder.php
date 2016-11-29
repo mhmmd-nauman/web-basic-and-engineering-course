@@ -5,6 +5,7 @@ use App\models\Bear;
 use App\models\Fish;
 use App\models\Tree;
 use App\models\Picnic;
+use App\User;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -17,13 +18,40 @@ class DatabaseSeeder extends Seeder
          
     
           Eloquent::unguard();
-          $this->call(BearAppSeeder::class);
-          $this->command->info('Bear app seeds finished.'); // show information in the command line after everything is run
+          $this->call(UserSeeder::class);
+          $this->command->info('User seeded!!'); // 
           $this->call(PermissionTableSeeder::class);
           $this->command->info('Permission app seeds finished.');
     }
 }
 
+class UserSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        // clear our database ------------------------------------------
+        DB::table('users')->delete();
+        
+
+        $first_user = User::create(array(
+            'name'         => 'Muhammad Nauman',
+            'email'         => 'mhmmd.nauman@gmail.com',
+            'password' => bcrypt('12345678'),
+        ));
+
+        
+        
+        $this->command->info('Users are seeded!');
+        
+    }
+
+
+}
 class BearAppSeeder extends Seeder
 {
     /**

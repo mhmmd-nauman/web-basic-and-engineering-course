@@ -46,6 +46,8 @@ class CreateStudentTable extends Migration
             $table->dateTime('sponsor_sign_date')->nullable();
             $table->enum('admission_status', ['done', 'info'])->nullable();
             $table->timestamps();
+            $table->integer('dealtby_id')->unsigned();
+            $table->foreign('dealtby_id')->references('id')->on('users');
             $table->string('dealt_by')->nullable();
         });
     }

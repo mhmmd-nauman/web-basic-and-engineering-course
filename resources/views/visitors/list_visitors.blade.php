@@ -33,19 +33,19 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
             background-color:#d4d4d4;
           }  
         .modal-dialog {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-            display: inline-block;
-            text-align: left;
-            vertical-align: middle;
+            //width: 100%;
+            //height: 100%;
+            //padding: 0;
+            //margin: 0;
+            //display: inline-block;
+            //text-align: left;
+            //vertical-align: middle;
         }
         .modal-content {
-            height: 90%;
-            min-height: 90%;
-            height: auto;
-            border-radius: 0;
+            //height: 90%;
+            //min-height: 90%;
+            //height: auto;
+            //border-radius: 0;
         }
     </style>
 
@@ -53,34 +53,67 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
         
         <div class=" container" >
             <div class="row">
-                <div class=" col-md-8">
-                    &nbsp;
+                <div class="col-md-7">
+                    <div class = "dropdown">
+   
+                        <button type = "button" class = "btn dropdown-toggle" id = "dropdownMenu1" data-toggle = "dropdown">
+                           View Report
+                           <span class = "caret"></span>
+                        </button>
+                        <ul class = "dropdown-menu" role = "menu" aria-labelledby = "dropdownMenu1">
+                            <li role = "presentation">
+                               <a role = "menuitem" tabindex = "-1" href = "{{url('/visitor')}}">Today</a>
+                            </li>
+
+                            <li role = "presentation">
+                               <a role = "menuitem" tabindex = "-1" href = "{{url('/visitor?load=yesterday')}}">Yesterday</a>
+                            </li>
+                            <li role = "presentation">
+                               <a role = "menuitem" tabindex = "-1" href = "{{url('/visitor?load=last7day')}}">Last 7 Days</a>
+                            </li>
+                            <li role = "presentation">
+                               <a role = "menuitem" tabindex = "-1" href = "{{url('/visitor?load=last30day')}}">Last 30 Days</a>
+                            </li>
+
+                            <li role = "presentation" class = "divider"></li>
+
+                            <li role = "presentation">
+                               <a role = "menuitem" tabindex = "-1" href = "{{url('/visitor')}}">Only Mine</a>
+                            </li>
+                            <li role = "presentation">
+                               <a role = "menuitem" tabindex = "-1" href = "{{url('/visitor?load=viewalldata')}}">View All Data</a>
+                            </li>
+                         </ul>
+                    </div>
                 </div>
-                <div class=" col-md-4">
+                <div class="col-md-5">
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Insert New Visitor</button>
                     <a  href="{{url('/visitor-export-excel')}}" target="_blank" class="btn btn-success">Export to Excel</a>
+                    <a  href="{{url('/visitor-export-pdf')}}" target="_blank" class="btn btn-success">Export to PDF</a>
                 </div>
             </div>
             <div class="row">
-                &nbsp;
+                <h4>Visitors Information - {{$report_title}}</h4>
             </div>
             <div class="row">
                <table class="table table-hover" >
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Date</th>
                                     <th>Name</th>
                                     <th>Contact</th>
                                     <th>Program</th>
                                     <th>Call/Visit</th>
+                                    <th>DealtBy</th>
                                     <th>Edit / Delete</th>
                                 </tr>
                             <?php foreach ($students as $student){?>
                                 <tr id="show">
-                                    <td><?php echo $student->id;?></td>
+                                    <td><?php echo date("M d Y",  strtotime($student->created_at));?></td>
                                     <td> <?php echo $student->first_name." ".$student->last_name; ?></td>
                                     <td> <?php echo $student->mobile;  ?></td>
                                     <td><?php echo $student->program; ?></td>
                                     <td><?php echo $student->visit_type; ?></td>
+                                    <td><?php echo $student->dealt_by; ?></td>
                                     <td><button class="btn btn-danger btn-sm glyphicon glyphicon-refresh"> Edit </button> &nbsp;&nbsp;<form method="POST" action="http://example.com/admin/user/delete/12" accept-charset="UTF-8" style="display:inline">
                                         <button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete User" data-message="Are you sure you want to delete this user ?">
                                             <i class="glyphicon glyphicon-trash"></i> Delete
@@ -95,10 +128,9 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                     
         </div>
 <div class="modal fade" id="myModal" role="dialog" style=" margin: 0px;">
-            <div class="modal-dialog">
-
+    <div class="modal-dialog" style="width: 100%;height: 100%;padding: 0;margin: 0;display: inline-block;text-align: left;vertical-align: middle;">
               <!-- Modal content-->
-              <div class="modal-content" style="width:1000px;">
+              <div class="modal-content" style="height: 90%;min-height: 90%;height: auto;border-radius: 0;">
                   <div class="modal-header" style=" background-color: #ac2925; color: white; font-size: 23px;">
                       <button type="button" class="close" data-dismiss="modal"><span class=" glyphicon glyphicon-remove"></span></button>
                   <h4 class="modal-title">Insert Visitor Record</h4>
