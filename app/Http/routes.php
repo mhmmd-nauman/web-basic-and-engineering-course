@@ -18,17 +18,20 @@
 
 
 Route::group(['middleware' => 'web'], function () {
-   Route::resource('items', 'ItemController');
-   Route::get('/', 'HomeController@index');
-   Route::get('/visitor-export-pdf', 'VisitorController@export_visitor_pdf');
+    Route::resource('items', 'ItemController');
+    Route::get('/', 'HomeController@index');
+    Route::get('/visitor-export-pdf', 'VisitorController@export_visitor_pdf');
 
     Route::auth();
-    Route::get('/bearf','bearController@index');
     // visitor routes
     Route::get('/visitor','VisitorController@getvisitor');
     Route::get('/visitor-export-excel','VisitorController@export_visitor');
     Route::post('/add_visitor','VisitorController@add_visitor');
     // end of visitor routes
+    // student routes
+    Route::get('/student','VisitorController@getstudents');
+    Route::get('/student_in_json','VisitorController@getstudent_in_json');
+    // end of student routes
     Route::get('/bear','bearController@getbear');
     Route::get('/picnic','bearController@getpicnic');
     Route::get('/fish','bearController@getfish');

@@ -24,7 +24,7 @@ class VisitorController extends Controller
 
     }
     public function getvisitor(Request $request){
-        //echo $request->load;
+        
         $user_id = Auth::user()->id;
         switch($request->load){
             case'yesterday':
@@ -55,9 +55,7 @@ class VisitorController extends Controller
         return view('visitors.list_visitors', compact('students'),['report_title'=>$report_title]);
     }
     public function export_visitor_pdf(){
-        //$pdf = App::make('dompdf.wrapper');
-        //$pdf->loadHTML('<h1>Test</h1>');
-        //return $pdf->stream();
+        
         $students = DB::table('students')->get();
         $pdf = PDF::loadView('visitors.list_visitors_pdf', compact('students'));
         return $pdf->download('VisitrsReport.pdf');
@@ -71,6 +69,44 @@ class VisitorController extends Controller
                 $sheet->fromArray($students);
             });
         })->export('xls');
+    }
+    public function getstudent_in_json(Request $request){
+        return Visitor::find($request->id)->toJson();
+    }
+
+    public function getstudents(Request $request){
+        
+        $user_id = Auth::user()->id;
+        switch($request->load){
+            case'yesterday':
+                $report_title = 'Yesterday - Mine';
+                $students = Visitor::where('dealtby_id','=',$user_id)
+                    ->where('admission_status','=','done')
+                    ->whereDate('created_at', '=', date('Y-m-d',  strtotime("-1 day")))->get();
+                break;
+            case'last7day':
+                $report_title = 'Last 7 Days - Mine';
+                $students = Visitor::where('dealtby_id','=',$user_id)
+                    ->where('admission_status','=','done')
+                    ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-30 day")))->get();
+                break;
+            case'last30day':
+                $report_title = 'Last 30 Days - Mine';
+                $students = Visitor::where('dealtby_id','=',$user_id)
+                    ->where('admission_status','=','done')
+                    ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-7 day")))->get();
+                break;
+            case'viewalldata':
+                $report_title = 'View All Data';
+                $students = Visitor::where('admission_status','=','done');
+                break;
+            default:
+                $report_title = 'Today - Mine';
+                $students = Visitor::where('dealtby_id','=',$user_id)
+                    ->whereDate('created_at', '=', date('Y-m-d'))->get();
+        }
+        //$students = DB::table('students')->get();
+        return view('students.list_students', compact('students'),['report_title'=>$report_title]);
     }
      public function getpicnic(){
         $users = DB::table('picnics')->get();

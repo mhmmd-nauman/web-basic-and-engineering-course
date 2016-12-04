@@ -1,17 +1,7 @@
 @extends('layouts.app')
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
-   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Project-A3I Visitor Records</title>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+@section('content')
 <script>
-function myFunction() {
-    confirm("Press a button!");
-}
+
 $('#confirmDelete').on('show.bs.modal', function (e) {
       $message = $(e.relatedTarget).attr('data-message');
       $(this).find('.modal-body p').text($message);
@@ -49,7 +39,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
         }
     </style>
 
-@section('content')
+
         
         <div class=" container" >
             <div class="row">
@@ -62,38 +52,38 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                         </button>
                         <ul class = "dropdown-menu" role = "menu" aria-labelledby = "dropdownMenu1">
                             <li role = "presentation">
-                               <a role = "menuitem" tabindex = "-1" href = "{{url('/visitor')}}">Today</a>
+                               <a role = "menuitem" tabindex = "-1" href = "{{url('/student')}}">Today</a>
                             </li>
 
                             <li role = "presentation">
-                               <a role = "menuitem" tabindex = "-1" href = "{{url('/visitor?load=yesterday')}}">Yesterday</a>
+                               <a role = "menuitem" tabindex = "-1" href = "{{url('/student?load=yesterday')}}">Yesterday</a>
                             </li>
                             <li role = "presentation">
-                               <a role = "menuitem" tabindex = "-1" href = "{{url('/visitor?load=last7day')}}">Last 7 Days</a>
+                               <a role = "menuitem" tabindex = "-1" href = "{{url('/student?load=last7day')}}">Last 7 Days</a>
                             </li>
                             <li role = "presentation">
-                               <a role = "menuitem" tabindex = "-1" href = "{{url('/visitor?load=last30day')}}">Last 30 Days</a>
+                               <a role = "menuitem" tabindex = "-1" href = "{{url('/student?load=last30day')}}">Last 30 Days</a>
                             </li>
 
                             <li role = "presentation" class = "divider"></li>
 
                             <li role = "presentation">
-                               <a role = "menuitem" tabindex = "-1" href = "{{url('/visitor')}}">Only Mine</a>
+                               <a role = "menuitem" tabindex = "-1" href = "{{url('/student')}}">Only Mine</a>
                             </li>
                             <li role = "presentation">
-                               <a role = "menuitem" tabindex = "-1" href = "{{url('/visitor?load=viewalldata')}}">View All Data</a>
+                               <a role = "menuitem" tabindex = "-1" href = "{{url('/student?load=viewalldata')}}">View All Data</a>
                             </li>
                          </ul>
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Insert New Visitor</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Insert New Student</button>
                     <a  href="{{url('/visitor-export-excel')}}" target="_blank" class="btn btn-success">Export to Excel</a>
                     <a  href="{{url('/visitor-export-pdf')}}" target="_blank" class="btn btn-success">Export to PDF</a>
                 </div>
             </div>
             <div class="row">
-                <h4>Visitors Information - {{$report_title}}</h4>
+                <h4>Student Information - {{$report_title}}</h4>
             </div>
             <div class="row">
                <table class="table table-hover" >
@@ -131,17 +121,55 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
             </div>
                     
         </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#search_button").click(function(){
+            var id =$("#search_text").val();
+            $.getJSON( "student_in_json?id="+id, function( json ) {
+                $("#first_name").val(json.first_name);
+                $("#last_name").val(json.last_name);
+                $("#mobile").val(json.mobile);
+                $("#program").val(json.program).change();
+                //$.each( json, function( key, val ) {
+                    //console.log( "JSON Data: " + json.id + " val "+ val );
+                    
+                  //});
+                
+           });
+        });
+    });
+    
+</script>
 <div class="modal fade" id="myModal" role="dialog" style=" margin: 0px;">
     <div class="modal-dialog" style="width: 90%;height: 90%;display: inline-block;text-align: center;vertical-align: middle;">
               <!-- Modal content-->
               <div class="modal-content" style="height: 90%;min-height: 90%;height: auto;border-radius: 0;">
                   <div class="modal-header" style=" background-color: #ac2925; color: white; font-size: 23px;">
                       <button type="button" class="close" data-dismiss="modal"><span class=" glyphicon glyphicon-remove"></span></button>
-                  <h4 class="modal-title">Insert Visitor Record</h4>
+                  <h4 class="modal-title">Insert Student Record</h4>
                 </div>
                   <div style="width:900px;">
-                      {!! Form::Open(array ('url' => '/add_visitor','class'=>'form-horizontal')) !!}
+                      {!! Form::Open(array ('url' => '/add_student','class'=>'form-horizontal')) !!}
                       <table class="table"  >
+                          <tr>
+                              <td >
+                                 <div class = "form-group">
+                                    <label for = "firstname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Visitor ID')}}
+                                    </label>
+
+                                   <div class = "col-md-5">
+                                       {{ Form::text('search_text',null,array('id'=>'search_text','class' => 'form-control input-sm','placeholder'=>'Visitor ID/Name/Contact'))}}
+                                   </div>
+                                </div>
+                              </td>
+                              <td>
+                                  <div class = "col-md-7">
+                                       <button type = "button" class = "btn btn-default" name="search_button" id="search_button">Load Visitor ID</button> 
+                                   </div>
+                              </td>
+                              
+                          </tr>
                           <tr>
                               <td>
                                  <div class = "form-group">
@@ -176,6 +204,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
 
                                    <div class = "col-md-7">
                                        <select name="program" id="program" class="form-control input-sm">
+                                           <option value="">Select One</option>
                                            <option value="BS Civil">BS Civil</option>
                                            <option value="MSC Math">MSC Math</option>
                                            <option value="MBA 1.5">MBA 1.5</option>
@@ -205,6 +234,188 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                            Visit
                                         </label>
                                      </div>
+
+                                    </div>
+                                 </div>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <div class = "form-group">
+                                    <label for = "firstname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Information Source:')}}
+                                    </label>
+
+                                   <div class = "col-md-7">
+                                       {{ Form::text('information_source',null,array('id'=>'information_source','class' => 'form-control input-sm','placeholder'=>'Information Source'))}}
+
+                                   </div>
+                                </div>
+                              </td>
+                              <td>
+                                  <div class = "form-group">
+                                    <label for = "lastname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Contact:')}}
+                                    </label>
+
+                                    <div class = "col-md-7">
+                                        {{ Form::text('mobile',null,array('id'=>'mobile','class' => 'form-control input-sm','placeholder'=>'Contact'))}}
+
+                                    </div>
+                                 </div>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <div class = "form-group">
+                                    <label for = "firstname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Information Source:')}}
+                                    </label>
+
+                                   <div class = "col-md-7">
+                                       {{ Form::text('information_source',null,array('id'=>'information_source','class' => 'form-control input-sm','placeholder'=>'Information Source'))}}
+
+                                   </div>
+                                </div>
+                              </td>
+                              <td>
+                                  <div class = "form-group">
+                                    <label for = "lastname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Contact:')}}
+                                    </label>
+
+                                    <div class = "col-md-7">
+                                        {{ Form::text('mobile',null,array('id'=>'mobile','class' => 'form-control input-sm','placeholder'=>'Contact'))}}
+
+                                    </div>
+                                 </div>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <div class = "form-group">
+                                    <label for = "firstname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Information Source:')}}
+                                    </label>
+
+                                   <div class = "col-md-7">
+                                       {{ Form::text('information_source',null,array('id'=>'information_source','class' => 'form-control input-sm','placeholder'=>'Information Source'))}}
+
+                                   </div>
+                                </div>
+                              </td>
+                              <td>
+                                  <div class = "form-group">
+                                    <label for = "lastname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Contact:')}}
+                                    </label>
+
+                                    <div class = "col-md-7">
+                                        {{ Form::text('mobile',null,array('id'=>'mobile','class' => 'form-control input-sm','placeholder'=>'Contact'))}}
+
+                                    </div>
+                                 </div>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <div class = "form-group">
+                                    <label for = "firstname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Information Source:')}}
+                                    </label>
+
+                                   <div class = "col-md-7">
+                                       {{ Form::text('information_source',null,array('id'=>'information_source','class' => 'form-control input-sm','placeholder'=>'Information Source'))}}
+
+                                   </div>
+                                </div>
+                              </td>
+                              <td>
+                                  <div class = "form-group">
+                                    <label for = "lastname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Contact:')}}
+                                    </label>
+
+                                    <div class = "col-md-7">
+                                        {{ Form::text('mobile',null,array('id'=>'mobile','class' => 'form-control input-sm','placeholder'=>'Contact'))}}
+
+                                    </div>
+                                 </div>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <div class = "form-group">
+                                    <label for = "firstname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Information Source:')}}
+                                    </label>
+
+                                   <div class = "col-md-7">
+                                       {{ Form::text('information_source',null,array('id'=>'information_source','class' => 'form-control input-sm','placeholder'=>'Information Source'))}}
+
+                                   </div>
+                                </div>
+                              </td>
+                              <td>
+                                  <div class = "form-group">
+                                    <label for = "lastname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Contact:')}}
+                                    </label>
+
+                                    <div class = "col-md-7">
+                                        {{ Form::text('mobile',null,array('id'=>'mobile','class' => 'form-control input-sm','placeholder'=>'Contact'))}}
+
+                                    </div>
+                                 </div>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <div class = "form-group">
+                                    <label for = "firstname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Information Source:')}}
+                                    </label>
+
+                                   <div class = "col-md-7">
+                                       {{ Form::text('information_source',null,array('id'=>'information_source','class' => 'form-control input-sm','placeholder'=>'Information Source'))}}
+
+                                   </div>
+                                </div>
+                              </td>
+                              <td>
+                                  <div class = "form-group">
+                                    <label for = "lastname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Contact:')}}
+                                    </label>
+
+                                    <div class = "col-md-7">
+                                        {{ Form::text('mobile',null,array('id'=>'mobile','class' => 'form-control input-sm','placeholder'=>'Contact'))}}
+
+                                    </div>
+                                 </div>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                 <div class = "form-group">
+                                    <label for = "firstname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Information Source:')}}
+                                    </label>
+
+                                   <div class = "col-md-7">
+                                       {{ Form::text('information_source',null,array('id'=>'information_source','class' => 'form-control input-sm','placeholder'=>'Information Source'))}}
+
+                                   </div>
+                                </div>
+                              </td>
+                              <td>
+                                  <div class = "form-group">
+                                    <label for = "lastname" class = "col-md-4 control-label">
+                                         {{ Form::label('title','Contact:')}}
+                                    </label>
+
+                                    <div class = "col-md-7">
+                                        {{ Form::text('mobile',null,array('id'=>'mobile','class' => 'form-control input-sm','placeholder'=>'Contact'))}}
 
                                     </div>
                                  </div>
