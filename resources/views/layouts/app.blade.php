@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>NCBA&E Campus System </title>
-    <!-- Fonts 
+    <!-- Fonts --> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
-    -->
+    
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('bootstrap/dist/css/bootstrap.min.css') }}" >
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}" ></script>
@@ -59,7 +59,7 @@
                                 </ul>
                          </div>
                     </li>
-                    
+                    <!--
                     <li class="dropdown" style=" color: white; font-size: 23px;width: 30%;">
                          <div class="dropdown" style=" float: left; margin-top: 5%; margin-right:10px; ">
                              <button class="btn btn-primary dropdown-toggle  glyphicon glyphicon-search" style=" background-color: #d43f3a" type="button" data-toggle="dropdown"> User Auhentication 
@@ -73,7 +73,7 @@
                                 </ul>
                          </div>
                     </li>
-                    
+                    -->
                     <li style=" color: white; width: 33%; margin-top: 20px;" class="pull-right">
                         <div style=" ">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"  style=" color: white;" role="button" aria-expanded="false">
@@ -96,6 +96,14 @@
         </div>
     </nav>
     <div class=" container">
+    @if (session('flash_message'))
+        <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{ session('flash_message') }}
+        </div>
+    @endif
+     <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{ session('flash_message') }}
+        </div>   
     @yield('content')
     </div>
    

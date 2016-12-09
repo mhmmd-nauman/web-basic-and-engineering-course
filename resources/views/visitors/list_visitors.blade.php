@@ -12,6 +12,9 @@
 function myFunction() {
     confirm("Press a button!");
 }
+function setDelete(visitor_id){
+    $("#visitor_id").val(visitor_id);
+}
 $('#confirmDelete').on('show.bs.modal', function (e) {
       $message = $(e.relatedTarget).attr('data-message');
       $(this).find('.modal-body p').text($message);
@@ -118,11 +121,11 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     <td><?php echo $student->visit_type; ?></td>
                                     <td><?php echo $student->dealt_by; ?></td>
                                     <td><?php echo $student->admission_status; ?></td>
-                                    <td><button class="btn btn-danger btn-sm glyphicon glyphicon-refresh"> Edit </button> &nbsp;&nbsp;<form method="POST" action="http://example.com/admin/user/delete/12" accept-charset="UTF-8" style="display:inline">
-                                        <button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete User" data-message="Are you sure you want to delete this user ?">
+                                    <td><button class="btn btn-danger btn-sm glyphicon glyphicon-refresh"> Edit </button> &nbsp;&nbsp;
+                                            <button class="btn btn-sm btn-danger" type="button" onclick="setDelete(<?php echo $student->id;?>);" data-toggle="modal" data-target="#confirmDelete" data-title="Delete User" data-message="Are you sure you want to delete this user ?">
                                             <i class="glyphicon glyphicon-trash"></i> Delete
                                         </button>
-                                        </form>
+                                        
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -257,17 +260,21 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
         <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
              <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                      <h4 class="modal-title">Delete Parmanently</h4>
-                    </div>
-                    <div class="modal-body">
-                      <p>Are you sure about this ?</p>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                      <button type="button" class="btn btn-danger" id="confirm">Delete</button>
-                    </div>
+                    {!! Form::Open(array ('url' => '/remove_visitor','class'=>'form-horizontal')) !!}
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title">Delete Parmanently</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>Are you sure about this ?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                          <input type="hidden" name="visitor_id" id="visitor_id" value=""/>
+                          {{ Form::submit('Delete',array('class' => 'btn btn-circle btn-danger')) }}
+                          
+                        </div>
+                    {!! Form::Close()!!}
                 </div>
               </div>
          </div>

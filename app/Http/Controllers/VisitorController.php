@@ -135,7 +135,14 @@ class VisitorController extends Controller
         $visitor->dealtby_id = Auth::user()->id;
         $visitor->dealt_by   = Auth::user()->name;
         $visitor->save();
-        return back();
+        $request->session()->flash('flash_message', 'Visitor was successful added!');
+        return redirect('visitor');
+        //return back();
+    }
+    public function remove_visitor(Request $request){
+         Visitor::destroy($request->visitor_id);
+         $request->session()->flash('flash_message', 'Visitor was successful removed!');
+         return back();
     }
 
 }
