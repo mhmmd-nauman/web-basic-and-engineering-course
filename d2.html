@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        <form action="data.php" method="get">
+        <table border="0" width="50%">
+            <caption> This is my form</caption>
+            <tr>
+                <td>First Name</td>
+                <td><input type="text" name="fname" placeholder="Enter First Name"/></td>
+            </tr>
+            <tr>
+                <td>
+                    Last Name: 
+                </td>
+                <td>
+                    <input type="text" name="lname" placeholder="Enter Last Name">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Email: 
+                </td>
+                <td>
+                    <input type="text" name="email" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Gender
+                </td>
+                <td>
+                    <input type="radio" name="gender" value="male">Male
+                    <input type="radio" name="gender" value="female">Female
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Subject
+                </td>
+                <td>
+                    <input type="checkbox" name="subject[]" value="web">Web
+                    <input type="checkbox" name="subject[]" value="c++">C++
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password: 
+                </td>
+                <td>
+                    <input type="password" name="password">
+                    <input type="hidden" name="hidden_dokha" value="343232">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Save Data">
+                    <input type="reset" value="Reset">
+                </td>
+            </tr>
+        </table>
+        </form>
+    </body>
+</html>
