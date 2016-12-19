@@ -120,7 +120,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     <td><?php echo $student->program; ?></td>
                                     <td><?php echo $student->visit_type; ?></td>
                                     <td><?php echo $student->dealt_by; ?></td>
-                                    <td><?php echo $student->admission_status; ?></td>
+                                    <td><?php echo $student->status; ?></td>
                                     <td><button class="btn btn-danger btn-sm glyphicon glyphicon-refresh"> Edit </button> &nbsp;&nbsp;
                                             <button class="btn btn-sm btn-danger" type="button" onclick="setDelete(<?php echo $student->id;?>);" data-toggle="modal" data-target="#confirmDelete" data-title="Delete User" data-message="Are you sure you want to delete this user ?">
                                             <i class="glyphicon glyphicon-trash"></i> Delete

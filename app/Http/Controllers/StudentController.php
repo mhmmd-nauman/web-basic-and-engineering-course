@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB; 
 use App\Http\Requests;
 use App\Bear;
+use App\Student;
 use App\Visitor;
 use App\Http;
 use App\models\Fish;
@@ -14,7 +15,7 @@ use Auth;
 use Excel;
 use PDF;
 
-class VisitorController extends Controller
+class StudentController extends Controller
 {
     public function __construct()
     {
@@ -23,50 +24,16 @@ class VisitorController extends Controller
     public function index(){
 
     }
-    public function getvisitor(Request $request){
-        
-        $user_id = Auth::user()->id;
-        switch($request->load){
-            case'yesterday':
-                $report_title = 'Yesterday - Mine';
-                $students = Visitor::where('dealtby_id','=',$user_id)
-                    ->where('status','=','info')
-                    ->whereDate('created_at', '=', date('Y-m-d',  strtotime("-1 day")))->get();
-                break;
-            case'last7day':
-                $report_title = 'Last 7 Days - Mine';
-                $students = Visitor::where('dealtby_id','=',$user_id)
-                        ->where('status','=','info')
-                        ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-30 day")))->get();
-                break;
-            case'last30day':
-                $report_title = 'Last 30 Days - Mine';
-                $students = Visitor::where('dealtby_id','=',$user_id)
-                        ->where('status','=','info')
-                        ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-7 day")))->get();
-                break;
-            case'viewalldata':
-                $report_title = 'View All Data';
-                $students = Visitor::where('status','=','info')->get();
-                break;
-            default:
-                $report_title = 'Today - Mine';
-                $students = Visitor::where('dealtby_id','=',$user_id)
-                        ->where('status','=','info')
-                        ->whereDate('created_at', '=', date('Y-m-d'))->get();
-        }
-        //$students = DB::table('students')->get();
-        return view('visitors.list_visitors', compact('students'),['report_title'=>$report_title]);
-    }
-    public function export_visitor_pdf(){
+   
+    public function export_student_pdf(){
         
         $students = DB::table('visitors')->get();
         $pdf = PDF::loadView('visitors.list_visitors_pdf', compact('students'));
         return $pdf->download('VisitrsReport.pdf');
     }
-    public function export_visitor(){
+    public function export_student(){
         //http://laraveldaily.com/laravel-excel-export-eloquent-models-results-easily/
-        $students = Visitor::select('id AS ID', 'first_name As First Name', 'last_name AS LastName','mobile As Contact','program as Program','visit_type as CallVisit','information_source as InformationSource','dealt_by as DealtBy','status As AdmissionStatus')->get();
+        $students = Student::select('id AS ID', 'first_name As First Name', 'last_name AS LastName','mobile As Contact','program as Program','visit_type as CallVisit','information_source as InformationSource','dealt_by as DealtBy','status As AdmissionStatus')->get();
         $excel = App::make('excel');
         Excel::create('visitors', function($excel) use($students) {
             $excel->sheet('Visitors Data', function($sheet) use($students) {
@@ -74,8 +41,8 @@ class VisitorController extends Controller
             });
         })->export('xls');
     }
-    public function getvisitor_in_json(Request $request){
-        return Visitor::find($request->id)->toJson();
+    public function getstudent_in_json(Request $request){
+        return Student::find($request->id)->toJson();
     }
 
     public function getstudents(Request $request){
@@ -84,29 +51,29 @@ class VisitorController extends Controller
         switch($request->load){
             case'yesterday':
                 $report_title = 'Yesterday - Mine';
-                $students = Visitor::where('dealtby_id','=',$user_id)
+                $students = Student::where('dealtby_id','=',$user_id)
                     ->where('admission_status','=','accepted')
                     ->whereDate('created_at', '=', date('Y-m-d',  strtotime("-1 day")))->get();
                 break;
             case'last7day':
                 $report_title = 'Last 7 Days - Mine';
-                $students = Visitor::where('dealtby_id','=',$user_id)
+                $students = Student::where('dealtby_id','=',$user_id)
                     ->where('admission_status','=','accepted')
                     ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-30 day")))->get();
                 break;
             case'last30day':
                 $report_title = 'Last 30 Days - Mine';
-                $students = Visitor::where('dealtby_id','=',$user_id)
+                $students = Student::where('dealtby_id','=',$user_id)
                     ->where('admission_status','=','accepted')
                     ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-7 day")))->get();
                 break;
             case'viewalldata':
                 $report_title = 'View All Data';
-                $students = Visitor::where('admission_status','=','accepted');
+                $students = Student::where('admission_status','=','accepted');
                 break;
             default:
                 $report_title = 'Today - Mine';
-                $students = Visitor::where('dealtby_id','=',$user_id)
+                $students = Student::where('dealtby_id','=',$user_id)
                     ->where('admission_status','=','accepted')
                     ->whereDate('created_at', '=', date('Y-m-d'))->get();
         }
@@ -129,40 +96,23 @@ class VisitorController extends Controller
         return view('my.trees', ['users' => $users]);
     }
     
-    public function add_visitor(Request $request){
-        $visitor = new Visitor();
-        $visitor->first_name = $request->get('first_name');
-        $visitor->last_name  = $request->get('last_name');
-        $visitor->program    = $request->get('program');
-        $visitor->visit_type = $request->get('visit_type');
-        $visitor->information_source = $request->get('information_source');
-        $visitor->mobile     = $request->get('mobile');
-        $visitor->dealtby_id = Auth::user()->id;
-        $visitor->dealt_by   = Auth::user()->name;
-        $visitor->status = 'info';
-        $visitor->save();
-        $request->session()->flash('flash_message', 'Visitor was successful added!');
-        return redirect('visitor');
-        //return back();
-    }
-    public function remove_visitor(Request $request){
-         Visitor::destroy($request->visitor_id);
+    
+    public function remove_student(Request $request){
+         Student::destroy($request->visitor_id);
          $request->session()->flash('flash_message', 'Visitor was successful removed!');
          return back();
     }
     public function add_student(Request $request){
-        if($request->visitor_id > 0){
-            $student = Visitor::find($request->visitor_id);
-        }else{
-            $student = new Visitor();
-        }
+        
+        $student = new Student();
+        $student->visitor_id = $request->get('visitor_id');
         $student->first_name = $request->get('first_name');
         $student->last_name  = $request->get('last_name');
-        $student->program    = $request->get('program');
-        $student->visit_type = $request->get('visit_type');
-        $student->information_source = $request->get('information_source');
+        //$student->program    = $request->get('program');
+        //$student->visit_type = $request->get('visit_type');
+        //$student->information_source = $request->get('information_source');
         $student->mobile     = $request->get('mobile');
-        $student->semester = $request->get('semester');
+        //$student->semester = $request->get('semester');
         $student->father_name = $request->get('father_name');
         $student->mobile = $request->get('mobile');
         $student->address = $request->get('address');
@@ -198,7 +148,15 @@ class VisitorController extends Controller
         $student->fee_code = $request->get('fee_code');
         $student->fee_code_date = date("Y-m-d",  strtotime($request->get('fee_code_date')));
         // end of tab 5
+        $student->dealtby_id = Auth::user()->id;
+        $student->dealt_by   = Auth::user()->name;
         $student->save();
+        // update visitor status
+        if($student->visitor_id > 0){
+            $rel_visitor = Visitor::find($student->visitor_id);
+            $rel_visitor->status = $request->get('admission_status');
+            $rel_visitor->save();
+        }
         $request->session()->flash('flash_message', 'Visitor was successful added!');
         return redirect('student');
         //return back();

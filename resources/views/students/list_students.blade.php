@@ -125,7 +125,8 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
     $(document).ready(function(){
         $("#search_button").click(function(){
             var id =$("#search_text").val();
-            $.getJSON( "student_in_json?id="+id, function( json ) {
+            $.getJSON( "visitor_in_json?id="+id, function( json ) {
+                $("#visitor_id").val(json.id);
                 $("#first_name").val(json.first_name);
                 $("#last_name").val(json.last_name);
                 $("#mobile").val(json.mobile);
@@ -170,6 +171,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
 
                                    <div class = "col-md-5">
                                        {{ Form::text('search_text',null,array('id'=>'search_text','class' => 'form-control input-sm','placeholder'=>'Visitor ID'))}}
+                                       <input type="hidden" name="visitor_id" value="" id="visitor_id">
                                    </div>
                                 </div>
                               </td>
@@ -687,7 +689,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                          {{ Form::label('title','Years of English Medium Schooling:')}}
                                     </label>
                                     <div class = "col-md-8">
-                                        {{ Form::text('candidate_for_any_degree_title',null,array('id'=>'candidate_for_any_degree_title','class' => 'form-control input-sm','placeholder'=>''))}}
+                                        {{ Form::text('years_of_english_medium',null,array('id'=>'years_of_english_medium','class' => 'form-control input-sm','placeholder'=>''))}}
 
                                     </div>
                                    
@@ -701,19 +703,19 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                       {{ Form::label('title','First Language:')}}
                                   </div>
                                   <div class="col-md-2">
-                                      Urdu&nbsp;<input type="radio" name="language[]" value="urdu">
+                                      Urdu&nbsp;<input type="radio" name="first_language" value="urdu" checked>
                                   </div>
                                   <div class="col-md-2">
-                                      English&nbsp;<input type="radio" name="language[]" value="urdu">
+                                      English&nbsp;<input type="radio" name="first_language" value="urdu">
                                   </div>
                                   <div class="col-md-2">
-                                      Punjabi&nbsp;<input type="radio" name="language[]" value="urdu">
+                                      Punjabi&nbsp;<input type="radio" name="first_language" value="urdu">
                                   </div>
                                   <div class="col-md-2">
-                                      Saraiki&nbsp;<input type="radio" name="language[]" value="urdu">
+                                      Saraiki&nbsp;<input type="radio" name="first_language" value="urdu">
                                   </div>
                                   <div class="col-md-2">
-                                      Other&nbsp;<input type="radio" name="language[]" value="urdu">
+                                      Other&nbsp;<input type="radio" name="first_language" value="urdu">
                                   </div>
                               </td>
                           </tr>
@@ -795,7 +797,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     </label>
 
                                    <div class = "col-md-9">
-                                       {{ Form::textarea('postal_address',null,array('id'=>'postal_address','class' => 'form-control input-sm','placeholder'=>'Honors and Awards','rows'=>'3'))}}
+                                       {{ Form::textarea('honors_awards',null,array('id'=>'honors_awards','class' => 'form-control input-sm','placeholder'=>'Honors and Awards','rows'=>'3'))}}
 
                                    </div>
                                 </div>
@@ -809,7 +811,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     </label>
 
                                    <div class = "col-md-9">
-                                       {{ Form::textarea('postal_address',null,array('id'=>'postal_address','class' => 'form-control input-sm','placeholder'=>'Favourite Activities','rows'=>'3'))}}
+                                       {{ Form::textarea('fav_activities',null,array('id'=>'fav_activities','class' => 'form-control input-sm','placeholder'=>'Favourite Activities','rows'=>'3'))}}
 
                                    </div>
                                 </div>
@@ -830,7 +832,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     </label>
 
                                     <div class = "col-md-7">
-                                        {{ Form::text('phone',null,array('id'=>'phone','class' => 'form-control input-sm','placeholder'=>'Name of Applicant'))}}
+                                        {{ Form::text('applicant_name',null,array('id'=>'applicant_name','class' => 'form-control input-sm','placeholder'=>'Name of Applicant'))}}
 
                                     </div>
                                  </div>
@@ -844,7 +846,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     </label>
 
                                     <div class = "col-md-7">
-                                        {{ Form::text('phone',null,array('id'=>'phone','class' => 'form-control input-sm','placeholder'=>'Privately Supported Student'))}}
+                                        {{ Form::text('privately_supported_student',null,array('id'=>'privately_supported_student','class' => 'form-control input-sm','placeholder'=>'Privately Supported Student'))}}
 
                                     </div>
                                  </div>
@@ -858,7 +860,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     </label>
 
                                     <div class = "col-md-7">
-                                        {{ Form::text('phone',null,array('id'=>'phone','class' => 'form-control input-sm','placeholder'=>'Name of Sponsor'))}}
+                                        {{ Form::text('sponsor_name',null,array('id'=>'sponsor_name','class' => 'form-control input-sm','placeholder'=>'Name of Sponsor'))}}
 
                                     </div>
                                  </div>
@@ -872,7 +874,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     </label>
 
                                     <div class = "col-md-7">
-                                        {{ Form::text('phone',null,array('id'=>'phone','class' => 'form-control input-sm','placeholder'=>'Relationship to Sponsored Student'))}}
+                                        {{ Form::text('sponsor_relation',null,array('id'=>'sponsor_relation','class' => 'form-control input-sm','placeholder'=>'Relationship to Sponsored Student'))}}
 
                                     </div>
                                  </div>
@@ -887,7 +889,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
 
                                       <div class = "col-md-2" style="border-bottom:1px #000 solid; ">&nbsp;</div>
                                       <div class = "col-md-1 control-label">Dated</div>
-                                      <div class = "col-md-2">{{ Form::text('phone',null,array('id'=>'phone','class' => 'form-control input-sm','placeholder'=>''))}}</div>
+                                      <div class = "col-md-2">{{ Form::text('sponsor_sign_date',null,array('id'=>'sponsor_sign_date','class' => 'form-control input-sm','placeholder'=>''))}}</div>
                                       <div class = "col-md-1 control-label">Day of</div>
                                       <div class = "col-md-1" style="border-bottom:1px #000 solid; ">&nbsp;</div>
                                  </div>
@@ -925,7 +927,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     </label>
 
                                     <div class = "col-md-2">
-                                        <input type="radio"  name="admission_status" value="accecpted">&nbsp;Accepted
+                                        <input type="radio"  name="admission_status" value="accepted" checked>&nbsp;Accepted
 
                                     </div>
                                       <div class="col-md-2">
@@ -942,7 +944,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     </label>
 
                                     <div class = "col-md-7">
-                                        {{ Form::text('phone',null,array('id'=>'phone','class' => 'form-control input-sm','placeholder'=>''))}}
+                                        {{ Form::text('admission_date',null,array('id'=>'admission_date','class' => 'form-control input-sm','placeholder'=>''))}}
 
                                     </div>
                                  </div>
@@ -956,7 +958,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     </label>
 
                                     <div class = "col-md-7">
-                                        {{ Form::text('phone',null,array('id'=>'phone','class' => 'form-control input-sm','placeholder'=>''))}}
+                                        {{ Form::text('interviewed_by',null,array('id'=>'interviewed_by','class' => 'form-control input-sm','placeholder'=>''))}}
 
                                     </div>
                                  </div>
@@ -970,7 +972,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     </label>
 
                                     <div class = "col-md-7">
-                                        {{ Form::text('phone',null,array('id'=>'phone','class' => 'form-control input-sm','placeholder'=>''))}}
+                                        {{ Form::text('chairman_admission_committee',null,array('id'=>'chairman_admission_committee','class' => 'form-control input-sm','placeholder'=>''))}}
 
                                     </div>
                                  </div>
@@ -983,11 +985,11 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                          {{ Form::label('title','Fee Code:')}}
                                     </label>
 
-                                      <div class = "col-md-2" >{{ Form::text('phone',null,array('id'=>'phone','class' => 'form-control input-sm','placeholder'=>''))}}</div>
+                                      <div class = "col-md-2" >{{ Form::text('fee_code',null,array('id'=>'fee_code','class' => 'form-control input-sm','placeholder'=>''))}}</div>
                                       <div class = "col-md-1 control-label">Signature:&nbsp;</div>
                                       <div class = "col-md-1" style="border-bottom:1px #000 solid; margin-left: 5px; ">&nbsp;</div>
                                       <div class = "col-md-1 control-label">Dated:</div>
-                                      <div class = "col-md-2" >{{ Form::text('phone',null,array('id'=>'phone','class' => 'form-control input-sm','placeholder'=>''))}}</div>
+                                      <div class = "col-md-2" >{{ Form::text('fee_code_date',null,array('id'=>'fee_code_date','class' => 'form-control input-sm','placeholder'=>''))}}</div>
                                  </div>
                               </td>
                             </tr>
@@ -999,7 +1001,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                       </div>
                         <div class="row">
                             <div class = "col-md-offset-5 col-md-5">
-                                {{ Form::submit('Save Visitor',array('class' => 'btn btn-circle btn-primary')) }}
+                                {{ Form::submit('Save Student',array('class' => 'btn btn-circle btn-primary')) }}
                             </div>
                         </div>
                       
@@ -1037,6 +1039,22 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
               changeYear: true,
               yearRange: "-60:+0",
             });
+            $( "#admission_date" ).datepicker({
+              changeMonth: true,
+              changeYear: true,
+              yearRange: "-60:+0",
+            });
+            $( "#fee_code_date" ).datepicker({
+              changeMonth: true,
+              changeYear: true,
+              yearRange: "-60:+0",
+            });
+            $( "#sponsor_sign_date" ).datepicker({
+              changeMonth: true,
+              changeYear: true,
+              yearRange: "-60:+0",
+            });
+            
           });
           </script>
 @endsection

@@ -16,11 +16,12 @@ class CreateStudentTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->increments('id');
             //$table->string('file');
-            $table->enum('semester', ['spring', 'fall'])->nullable();
-            $table->enum('visit_type', ['call', 'visit']);
+            //$table->integer('semester', ['spring', 'fall'])->nullable();
+            $table->integer('visitor_id')->nullable();
+            
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('information_source')->nullable();
+            //$table->string('information_source')->nullable();
             $table->string('father_name')->nullable();
             $table->string('father_occupation')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
@@ -55,6 +56,7 @@ class CreateStudentTable extends Migration
             $table->integer('dealtby_id')->unsigned();
             $table->foreign('dealtby_id')->references('id')->on('users');
             $table->string('dealt_by')->nullable();
+             
             $table->timestamps();
         });
     }

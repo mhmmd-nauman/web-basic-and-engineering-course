@@ -26,11 +26,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/visitor','VisitorController@getvisitor');
     Route::get('/visitor-export-excel','VisitorController@export_visitor');
     Route::post('/add_visitor','VisitorController@add_visitor');
+    Route::get('/visitor_in_json','VisitorController@getvisitor_in_json');
     Route::post('/remove_visitor','VisitorController@remove_visitor');
     // end of visitor routes
     // student routes
-    Route::get('/student','VisitorController@getstudents');
-    Route::get('/student_in_json','VisitorController@getstudent_in_json');
+    Route::get('/student','StudentController@getstudents');
+    //Route::get('/student_in_json','StudentController@getstudent_in_json');
+    Route::post('/add_student','StudentController@add_student');
     // end of student routes
     Route::get('/bear','bearController@getbear');
     Route::get('/picnic','bearController@getpicnic');
