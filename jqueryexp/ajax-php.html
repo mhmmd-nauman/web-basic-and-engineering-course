@@ -6,27 +6,29 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Event Handler Example</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/jquery-3.1.1.min.js"></script>
         <script type = "text/javascript" language = "javascript">
          $(document).ready(function() {
-            $("p").css("background-color", "yellow");
-            $(".myclass").css("background-color", "yellow");
-            $("#myid").css("background-color", "yellow");
+            $("#driver").click(function(event){
+               var name = $("#name").val();
+               $("#stage").load('result.php', {"name":name} );
+            });
          });
         </script>
-        <style type="text/css">
-            .myclass{ background-color: red;}
-            #myid{ background-color: green;}
+        <style>
+         .div{ margin:10px;padding:12px; border:2px solid #666; width:60px;}
         </style>
     </head>
     <body>
-        <div>
-            <p class = "myclass">This is a paragraph.</p>
-            <p id = "myid">This is second paragraph.</p>
-            <p>This is third paragraph.</p>
+        <p>Click on the button to load result.html file −</p>
+        <input type = "input" id = "name" size = "40" /><br />
+        <div id = "stage" style = "background-color:cc0; margin: 200px;">
+           STAGE
         </div>
+		
+      <input type = "button" id = "driver" value = "Load Data" />
     </body>
 </html>

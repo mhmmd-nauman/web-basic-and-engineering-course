@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Resizable Example</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/jquery-ui-1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.css">
+        <style>
+            #resizable { width: 150px; height: 150px; padding: 0.5em; }
+            #resizable h3 { text-align: center; margin: 0; }
+        </style>
+        <script type = "text/javascript" language = "javascript">
+         $( function() {
+            $( "#dialog" ).dialog();
+          } );
+        </script>
+        
+    </head>
+    <body>
+        <p>Dialog Simple Example</p>
+		
+      <div id="dialog" title="Basic dialog">
+        <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+      </div>
+		
+      
+    </body>
+</html>

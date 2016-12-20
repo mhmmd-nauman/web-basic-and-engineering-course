@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Apply CSS Example</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script type = "text/javascript" language = "javascript">
+         $(document).ready(function() {
+            $("#p1").addClass("selected");
+            $("#p2").addClass("highlight");
+            $("li").eq(2).css({"color":"red", "background-color":"green"});
+         });
+        </script>
+        <style>
+         .selected { color:red; }
+         .highlight { background:yellow; }
+        </style>
+    </head>
+    <body>
+        <div>
+            <p id = "p1">This is second paragraph.</p>
+            <p id = "p2">This is second paragraph.</p>
+        </div>
+        <div>
+            <ul>
+            <li>list item 1</li>
+            <li>list item 2</li>
+            <li>list item 3</li>
+            <li>list item 4</li>
+            <li>list item 5</li>
+            <li>list item 6</li>
+         </ul>
+        </div>
+    </body>
+</html>

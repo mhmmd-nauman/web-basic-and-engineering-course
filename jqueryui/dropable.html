@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Draggable Example</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/jquery-ui-1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.css">
+        <style>
+            #draggable { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
+            #droppable { width: 150px; height: 150px; padding: 0.5em; float: left; margin: 10px; }
+        </style>
+        <script type = "text/javascript" language = "javascript">
+         $( function() {
+            $( "#draggable" ).draggable();
+            $( "#droppable" ).droppable({
+              drop: function( event, ui ) {
+                $( this )
+                  .addClass( "ui-state-highlight" )
+                  .find( "p" )
+                    .html( "Dropped!" );
+              }
+            });
+          } );
+        </script>
+        
+    </head>
+    <body>
+        <p>Dropable Elements</p>
+		
+      <div id="draggable" class="ui-widget-content">
+        <p>Drag me to my target</p>
+      </div>
+
+      <div id="droppable" class="ui-widget-header">
+        <p>Drop here</p>
+      </div>
+		
+      
+    </body>
+</html>

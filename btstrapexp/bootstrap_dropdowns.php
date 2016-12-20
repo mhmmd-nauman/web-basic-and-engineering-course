@@ -20,7 +20,7 @@ and open the template in the editor.
         <div class="container">
             
             <div class="row">
-                <div class="col-md-12" style="background-color: red;">
+                <div class="col-md-6" style="background-color: red;">
                     
                     <div class = "dropdown">
    
@@ -53,6 +53,9 @@ and open the template in the editor.
 
                      </div>
                      
+                </div>
+                <div class="col-md-6" style="background-color: green;">
+                    &nbsp;
                 </div>
             </div>
            

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Event Handler Example</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/jquery-ui-1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.css">
+        <script type = "text/javascript" language = "javascript">
+         $(function() {
+            //$( "#tabs" ).tabs();
+                $( "#date_of_birth" ).datepicker({
+                  changeMonth: true,
+                  changeYear: true,
+                  yearRange: "-60:+0",
+                });
+          });
+        </script>
+        <style>
+         .div{ margin:10px;padding:12px; border:2px solid #666; width:60px;}
+        </style>
+    </head>
+    <body>
+        <p>Pick the date</p>
+		
+      <input type="text" name="date_of_birth" id="date_of_birth"/>
+		
+      
+    </body>
+</html>

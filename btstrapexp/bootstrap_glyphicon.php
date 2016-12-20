@@ -24,7 +24,10 @@ and open the template in the editor.
                         <button type = "button" class = "btn btn-default">
                            <span class = "glyphicon glyphicon-sort-by-attributes"></span>
                         </button>
-
+                        <button type = "button" class = "btn btn-default">
+                           <span class=" glyphicon glyphicon-heart"> fb</span>
+                        </button>
+                        
                         <button type = "button" class = "btn btn-default">
                            <span class = "glyphicon glyphicon-sort-by-attributes-alt"></span>
                         </button>

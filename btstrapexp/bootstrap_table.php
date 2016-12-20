@@ -20,8 +20,8 @@ and open the template in the editor.
             
             <div class="row">
                 <div class="col-md-12">
-                    <table class = "table table-hover table-striped">
-                        <caption>Student Data</caption>
+                    <table class = "table table-condensed table-striped table-hover ">
+                        <caption>Student1 Data</caption>
                         <thead>
                            <tr>
                               <th>Name</th>
@@ -30,20 +30,20 @@ and open the template in the editor.
                         </thead>
 
                         <tbody>
-                            <tr class="success">
+                            <tr class="danger" >
                               <td>Tanmay</td>
                               <td>Bangalore</td>
                            </tr>
 
-                           <tr class="danger">
+                           <tr class="success" >
                               <td>Sachin</td>
                               <td>Mumbai</td>
                            </tr>
-                           <tr class="warning">
+                           <tr class="info" >
                               <td>Sachin</td>
                               <td>Mumbai</td>
                            </tr>
-                           <tr >
+                           <tr class="warning" >
                               <td>Sachin</td>
                               <td>Mumbai</td>
                            </tr>

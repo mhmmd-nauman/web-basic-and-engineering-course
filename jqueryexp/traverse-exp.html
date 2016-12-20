@@ -6,27 +6,29 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Image Example</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/jquery-3.1.1.min.js"></script>
         <script type = "text/javascript" language = "javascript">
          $(document).ready(function() {
-            $("p").css("background-color", "yellow");
-            $(".myclass").css("background-color", "yellow");
-            $("#myid").css("background-color", "yellow");
+            $(" div ul li").eq(2).addClass("selected");
          });
         </script>
-        <style type="text/css">
-            .myclass{ background-color: red;}
-            #myid{ background-color: green;}
+        <style>
+         .selected { color:red; }
         </style>
     </head>
     <body>
         <div>
-            <p class = "myclass">This is a paragraph.</p>
-            <p id = "myid">This is second paragraph.</p>
-            <p>This is third paragraph.</p>
+            <ul>
+                <li>list item 1</li>
+                <li>list item 2</li>
+                <li>list item 3</li>
+                <li>list item 4</li>
+                <li>list item 5</li>
+                <li>list item 6</li>
+            </ul>
         </div>
     </body>
 </html>

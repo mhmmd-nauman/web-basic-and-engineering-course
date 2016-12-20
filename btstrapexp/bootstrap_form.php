@@ -20,7 +20,7 @@ and open the template in the editor.
             
             <div class="row">
                 
-                <div class="col-md-6" style="background-color: red;">
+                <div class="col-md-6" >
                 <form role = "form">
 
                     <div class = "form-group">
