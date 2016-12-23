@@ -8,6 +8,9 @@ use App\Http\Requests;
 use App\Bear;
 use App\Student;
 use App\Visitor;
+use App\StudentEducation;
+use App\StudentPreviousMajorSubjects;
+use App\StudentLanguageRating;
 use App\Http;
 use App\models\Fish;
 use App;
@@ -104,12 +107,13 @@ class StudentController extends Controller
     }
     public function add_student(Request $request){
         
+        
         $student = new Student();
         $student->visitor_id = $request->get('visitor_id');
         $student->first_name = $request->get('first_name');
         $student->last_name  = $request->get('last_name');
-        //$student->program    = $request->get('program');
-        //$student->visit_type = $request->get('visit_type');
+        $student->program    = $request->get('program');
+        $student->semester = $request->get('semester');
         //$student->information_source = $request->get('information_source');
         $student->mobile     = $request->get('mobile');
         //$student->semester = $request->get('semester');
@@ -157,6 +161,54 @@ class StudentController extends Controller
             $rel_visitor->status = $request->get('admission_status');
             $rel_visitor->save();
         }
+        
+        // update education table
+        $i=0;
+        foreach($request->name_of_institution as $name_of_institution){
+            $st_edu = new StudentEducation();
+            $st_edu->institution_name = $name_of_institution;
+            $st_edu->location = $request->location[$i];
+            $st_edu->date_of_entering = $request->date_of_entering[$i];
+            $st_edu->date_of_leaving = $request->date_of_leaving[$i];
+            $st_edu->degree_receive = $request->certificate_or_diploma[$i];
+            $st_edu->grade = $request->grade_or_division[$i];
+            $st_edu->student_id = $student->id;
+            $st_edu->save();
+            $i++;
+        }
+        $i=0;
+        // update previouus major subjects StudentPreviousMajorSubjects
+        foreach($request->major_in_undergraduate as $major_in_undergraduate){
+            $st_pre_sub = new StudentPreviousMajorSubjects();
+            $st_pre_sub->subject_name = $major_in_undergraduate;
+            $st_pre_sub->subject_type = 'undergraduate';
+            $st_pre_sub->student_id = $student->id;
+            $st_pre_sub->save();
+            $i++;
+        }
+        $i=0;
+        foreach($request->major_in_graduate as $major_in_graduate){
+            $st_pre_sub = new StudentPreviousMajorSubjects();
+            $st_pre_sub->subject_name  = $major_in_graduate;
+            $st_pre_sub->subject_type = 'graduate';
+            $st_pre_sub->student_id = $student->id;
+            $st_pre_sub->save();
+            $i++;
+        }
+        $i=0;
+        // student languages data
+        foreach($request->name_of_language as $name_of_language){
+            $st_pre_sub = new StudentLanguageRating();
+            $st_pre_sub->language_name  = $name_of_language;
+            $st_pre_sub->reading = $request->reading_level[$i];
+            $st_pre_sub->writing = $request->writing_level[$i];
+            $st_pre_sub->speaking = $request->speaking_level[$i];
+            $st_pre_sub->listening = $request->listening_level[$i];
+            $st_pre_sub->student_id = $student->id;
+            $st_pre_sub->save();
+            $i++;
+        }
+        
         $request->session()->flash('flash_message', 'Visitor was successful added!');
         return redirect('student');
         //return back();

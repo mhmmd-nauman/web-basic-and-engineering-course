@@ -16,7 +16,7 @@ class CreateStudentTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->increments('id');
             //$table->string('file');
-            //$table->integer('semester', ['spring', 'fall'])->nullable();
+            $table->enum('semester', ['spring', 'fall','summer'])->nullable();
             $table->integer('visitor_id')->nullable();
             
             $table->string('first_name');

@@ -130,6 +130,10 @@ class VisitorController extends Controller
     }
     
     public function add_visitor(Request $request){
+        //print_r($request->get('visitor_edit_id'));
+        if($request->get('visitor_edit_id')){
+            
+        }
         $visitor = new Visitor();
         $visitor->first_name = $request->get('first_name');
         $visitor->last_name  = $request->get('last_name');

@@ -131,6 +131,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                 $("#last_name").val(json.last_name);
                 $("#mobile").val(json.mobile);
                 $("#program").val(json.program).change();
+                alert("Visitor Data Loaded!");
                 //$.each( json, function( key, val ) {
                     //console.log( "JSON Data: " + json.id + " val "+ val );
                     
@@ -141,7 +142,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
     });
     
 </script>
-<div class="modal fade" id="myModal" role="dialog" style=" margin: 0px;">
+<div class="modal fade" id="myModal" role="dialog" style=" margin: 0 0 0 5px;">
     <div class="modal-dialog" style="width: 90%;height: 90%;display: inline-block;text-align: center;vertical-align: middle;">
               <!-- Modal content-->
               <div class="modal-content" style="height: 90%;min-height: 90%;height: auto;border-radius: 0;">
@@ -149,19 +150,21 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                       <button type="button" class="close" data-dismiss="modal"><span class=" glyphicon glyphicon-remove"></span></button>
                   <h4 class="modal-title">Insert Student Record</h4>
                 </div>
-                  <div style="width:900px;">
+                  <div style="width:95%;">
                       {!! Form::Open(array ('url' => '/add_student','class'=>'form-horizontal')) !!}
                       <div class="row">
                       <div id="tabs">
                         <ul>
                           <li><a href="#tabs-1">Personal Information</a></li>
-                          <li><a href="#tabs-2">Education</a></li>
-                          <li><a href="#tabs-3">Languages,Honor & Awards</a></li>
-                          <li><a href="#tabs-4">Applicant & Sponsor</a></li>
-                          <li><a href="#tabs-5">Official Use Only</a></li>
+                          <li><a href="#tabs-2">Personal Information - 2</a></li>
+                          <li><a href="#tabs-3">Education</a></li>
+                          <li><a href="#tabs-4">Education - 2</a></li>
+                          <li><a href="#tabs-5">Languages,Honor & Awards</a></li>
+                          <li><a href="#tabs-6">Applicant & Sponsor</a></li>
+                          <li><a href="#tabs-7">Official Use Only</a></li>
                         </ul>
                         <div id="tabs-1">
-                         <table class="table"  >
+                         <table class="table table-condensed"  >
                           <tr>
                               <td >
                                  <div class = "form-group">
@@ -171,14 +174,16 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
 
                                    <div class = "col-md-5">
                                        {{ Form::text('search_text',null,array('id'=>'search_text','class' => 'form-control input-sm','placeholder'=>'Visitor ID'))}}
-                                       <input type="hidden" name="visitor_id" value="" id="visitor_id">
+                                       <input type="hidden" name="visitor_id" value="" id="visitor_id"> 
                                    </div>
+                                     <div class="col-md-1">
+                                         <button type = "button" class = "btn btn-default" name="search_button" id="search_button">Load</button>
+                                     </div>
                                 </div>
+                                  
                               </td>
                               <td>
-                                  <div class = "col-md-7">
-                                       <button type = "button" class = "btn btn-default" name="search_button" id="search_button">Load Visitor ID</button> 
-                                   </div>
+                                  &nbsp;
                               </td>
                               
                           </tr>
@@ -278,21 +283,6 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                               </td>
                           </tr>
                           <tr>
-                              <td colspan="2" style="text-align:left;">
-                                 <div class = "form-group">
-                                    <label for = "firstname" class = "col-md-2 control-label">
-                                         {{ Form::label('title','Address:')}}
-                                    </label>
-
-                                   <div class = "col-md-10">
-                                       {{ Form::textarea('address',null,array('id'=>'address','class' => 'form-control input-sm','placeholder'=>'Address','rows'=>'3'))}}
-
-                                   </div>
-                                </div>
-                              </td>
-                              
-                          </tr>
-                          <tr>
                               <td>
                                  <div class = "form-group">
                                     <label for = "firstname" class = "col-md-4 control-label">
@@ -319,115 +309,151 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                               </td>
                           </tr>
                           <tr>
-                              <td>
-                                 <div class = "form-group">
-                                    <label for = "firstname" class = "col-md-4 control-label">
-                                         {{ Form::label('title','Gender:')}}
-                                    </label>
-
-                                   <div class = "col-md-7">
-                                       <div class = "radio">
-                                        <label>
-                                           <input type = "radio" name = "gender" id = "gender" value = "male" checked> Male
-                                        </label>
-                                        <label>
-                                           <input type = "radio" name = "gender" id = "gender" value = "female">
-                                           Female
-                                        </label>
-                                        </div>
-                                   </div>
-                                </div>
-                              </td>
-                              <td>
-                                  <div class = "form-group">
-                                    <label for = "lastname" class = "col-md-4 control-label">
-                                         {{ Form::label('title','Marital Status:')}}
-                                    </label>
-
-                                    <div class = "col-md-7">
-                                        <div class = "radio">
-                                        <label>
-                                           <input type = "radio" name = "marital_status" id = "marital_status" value = "maried" checked> Married
-                                        </label>
-                                        <label>
-                                           <input type = "radio" name = "marital_status" id = "marital_status" value = "unmaried">
-                                           Unmaried
-                                        </label>
-                                        </div>
-                                 </div>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>
-                                 <div class = "form-group">
-                                    <label for = "firstname" class = "col-md-4 control-label">
-                                         {{ Form::label('title','Date of Birth:')}}
-                                    </label>
-
-                                   <div class = "col-md-7">
-                                       {{ Form::text('date_of_birth',null,array('id'=>'date_of_birth','class' => 'form-control input-sm','placeholder'=>'Date of Birth'))}}
-
-                                   </div>
-                                </div>
-                              </td>
-                              <td>
-                                  <div class = "form-group">
-                                    <label for = "lastname" class = "col-md-4 control-label">
-                                         {{ Form::label('title','Country of Citizenship:')}}
-                                    </label>
-
-                                    <div class = "col-md-7">
-                                        {{ Form::text('country_of_citizenship',null,array('id'=>'country_of_citizenship','class' => 'form-control input-sm','placeholder'=>'Country of Citizenship'))}}
-
-                                    </div>
-                                 </div>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>
-                                 <div class = "form-group">
-                                    <label for = "firstname" class = "col-md-4 control-label">
-                                         {{ Form::label('title','CNIC:')}}
-                                    </label>
-
-                                   <div class = "col-md-7">
-                                       {{ Form::text('cnic',null,array('id'=>'cnic','class' => 'form-control input-sm','placeholder'=>'CNIC'))}}
-
-                                   </div>
-                                </div>
-                              </td>
-                              <td>
-                                  <div class = "form-group">
-                                    <label for = "lastname" class = "col-md-4 control-label">
-                                         {{ Form::label('title','Phone:')}}
-                                    </label>
-
-                                    <div class = "col-md-7">
-                                        {{ Form::text('phone',null,array('id'=>'phone','class' => 'form-control input-sm','placeholder'=>'Phone'))}}
-
-                                    </div>
-                                 </div>
-                              </td>
-                          </tr>
-                          <tr>
                               <td colspan="2" style="text-align:left;">
                                  <div class = "form-group">
                                     <label for = "firstname" class = "col-md-2 control-label">
-                                         {{ Form::label('title','Postal Address:')}}
+                                         {{ Form::label('title','Address:')}}
                                     </label>
 
                                    <div class = "col-md-10">
-                                       {{ Form::textarea('postal_address',null,array('id'=>'postal_address','class' => 'form-control input-sm','placeholder'=>'Postal Address','rows'=>'3'))}}
+                                       {{ Form::textarea('address',null,array('id'=>'address','class' => 'form-control input-sm','placeholder'=>'Address','rows'=>'3'))}}
 
                                    </div>
                                 </div>
                               </td>
                               
                           </tr>
+                          <tr>
+                              <td colspan="2">
+                                  
+                                  <button type = "button" class = "btn btn-primary" onclick="updatetab(1)">&nbsp;Next&nbsp;</button>
+                              </td>
+                          </tr>
+                          
+                          
+                          
+                          
+                          
                       </table>
                       
                         </div>
                         <div id="tabs-2">
+                            <table class="table table-condensed"  >
+                                <tr>
+                                    <td>
+                                       <div class = "form-group">
+                                          <label for = "firstname" class = "col-md-4 control-label">
+                                               {{ Form::label('title','Gender:')}}
+                                          </label>
+
+                                         <div class = "col-md-7">
+                                             <div class = "radio">
+                                              <label>
+                                                 <input type = "radio" name = "gender" id = "gender" value = "male" checked> Male
+                                              </label>
+                                              <label>
+                                                 <input type = "radio" name = "gender" id = "gender" value = "female">
+                                                 Female
+                                              </label>
+                                              </div>
+                                         </div>
+                                      </div>
+                                    </td>
+                                    <td>
+                                        <div class = "form-group">
+                                          <label for = "lastname" class = "col-md-4 control-label">
+                                               {{ Form::label('title','Marital Status:')}}
+                                          </label>
+
+                                          <div class = "col-md-7">
+                                              <div class = "radio">
+                                              <label>
+                                                 <input type = "radio" name = "marital_status" id = "marital_status" value = "maried" checked> Married
+                                              </label>
+                                              <label>
+                                                 <input type = "radio" name = "marital_status" id = "marital_status" value = "unmaried">
+                                                 Unmaried
+                                              </label>
+                                              </div>
+                                       </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                       <div class = "form-group">
+                                          <label for = "firstname" class = "col-md-4 control-label">
+                                               {{ Form::label('title','Date of Birth:')}}
+                                          </label>
+
+                                         <div class = "col-md-7">
+                                             {{ Form::text('date_of_birth',null,array('id'=>'date_of_birth','class' => 'form-control input-sm','placeholder'=>'Date of Birth'))}}
+
+                                         </div>
+                                      </div>
+                                    </td>
+                                    <td>
+                                        <div class = "form-group">
+                                          <label for = "lastname" class = "col-md-4 control-label">
+                                               {{ Form::label('title','Country of Citizenship:')}}
+                                          </label>
+
+                                          <div class = "col-md-7">
+                                              {{ Form::text('country_of_citizenship',null,array('id'=>'country_of_citizenship','class' => 'form-control input-sm','placeholder'=>'Country of Citizenship'))}}
+
+                                          </div>
+                                       </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                       <div class = "form-group">
+                                          <label for = "firstname" class = "col-md-4 control-label">
+                                               {{ Form::label('title','CNIC:')}}
+                                          </label>
+
+                                         <div class = "col-md-7">
+                                             {{ Form::text('cnic',null,array('id'=>'cnic','class' => 'form-control input-sm','placeholder'=>'CNIC'))}}
+
+                                         </div>
+                                      </div>
+                                    </td>
+                                    <td>
+                                        <div class = "form-group">
+                                          <label for = "lastname" class = "col-md-4 control-label">
+                                               {{ Form::label('title','Phone:')}}
+                                          </label>
+
+                                          <div class = "col-md-7">
+                                              {{ Form::text('phone',null,array('id'=>'phone','class' => 'form-control input-sm','placeholder'=>'Phone'))}}
+
+                                          </div>
+                                       </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align:left;">
+                                     <div class = "form-group">
+                                        <label for = "firstname" class = "col-md-2 control-label">
+                                             {{ Form::label('title','Postal Address:')}}
+                                        </label>
+
+                                       <div class = "col-md-10">
+                                           {{ Form::textarea('postal_address',null,array('id'=>'postal_address','class' => 'form-control input-sm','placeholder'=>'Postal Address','rows'=>'3'))}}
+
+                                       </div>
+                                    </div>
+                                  </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+
+                                        <button type = "button" class = "btn btn-primary" onclick="updatetab(2)">&nbsp;Next&nbsp;</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="tabs-3">
                           
                             <table width="100%" class=" table-bordered table-condensed" style="font-size:10px; font-weight: bold;">
                                       <caption><span style="font-size:12px;">Educational Background</span></caption>
@@ -459,140 +485,12 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                         </td>
                                         <td>
                                             <div class = "col-md-12">
-                                              <input name="date_of_entering[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="date_of_entering[]" class = "form-control input-sm date_of_entering" type = "text" placeholder = "">
                                            </div>
                                         </td>
                                         <td>
                                             <div class = "col-md-12">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="certificate_or_diploma[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                                <input name="grade_or_division[]" class = "form-control input-sm" type = "text" placeholder = "" >
-                                           </div>
-                                        </td>
-                                      </tr>
-                                       <tr>
-                                        <td>
-                                            <div class = " col-md-12">
-                                                <input name="name_of_institution[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="location[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="date_of_entering[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="certificate_or_diploma[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                                <input name="grade_or_division[]" class = "form-control input-sm" type = "text" placeholder = "" >
-                                           </div>
-                                        </td>
-                                      </tr>
-                                       <tr>
-                                        <td>
-                                            <div class = " col-md-12">
-                                                <input name="name_of_institution[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="location[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="date_of_entering[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="certificate_or_diploma[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                                <input name="grade_or_division[]" class = "form-control input-sm" type = "text" placeholder = "" >
-                                           </div>
-                                        </td>
-                                      </tr>
-                                       <tr>
-                                        <td>
-                                            <div class = " col-md-12">
-                                                <input name="name_of_institution[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="location[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="date_of_entering[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="certificate_or_diploma[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                                <input name="grade_or_division[]" class = "form-control input-sm" type = "text" placeholder = "" >
-                                           </div>
-                                        </td>
-                                      </tr>
-                                       <tr>
-                                        <td>
-                                            <div class = " col-md-12">
-                                                <input name="name_of_institution[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="location[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="date_of_entering[]" class = "form-control input-sm" type = "text" placeholder = "">
-                                           </div>
-                                        </td>
-                                        <td>
-                                            <div class = "col-md-12">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="date_of_leaving[]" class = "form-control input-sm date_of_leaving" type = "text" placeholder = "">
                                            </div>
                                         </td>
                                         <td>
@@ -607,9 +505,149 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                         </td>
                                       </tr>
                                       
+                                       <tr>
+                                        <td>
+                                            <div class = " col-md-12">
+                                                <input name="name_of_institution[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="location[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="date_of_entering[]" class = "form-control input-sm date_of_entering" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="date_of_leaving[]" class = "form-control input-sm date_of_leaving" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="certificate_or_diploma[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                                <input name="grade_or_division[]" class = "form-control input-sm" type = "text" placeholder = "" >
+                                           </div>
+                                        </td>
+                                      </tr>
+                                      
+                                       <tr>
+                                        <td>
+                                            <div class = " col-md-12">
+                                                <input name="name_of_institution[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="location[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="date_of_entering[]" class = "form-control input-sm date_of_entering" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="date_of_leaving[]" class = "form-control input-sm date_of_leaving" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="certificate_or_diploma[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                                <input name="grade_or_division[]" class = "form-control input-sm" type = "text" placeholder = "" >
+                                           </div>
+                                        </td>
+                                      </tr>
+                                       <tr>
+                                        <td>
+                                            <div class = " col-md-12">
+                                                <input name="name_of_institution[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="location[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="date_of_entering[]" class = "form-control input-sm date_of_entering" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="date_of_leaving[]" class = "form-control input-sm date_of_leaving" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="certificate_or_diploma[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                                <input name="grade_or_division[]" class = "form-control input-sm" type = "text" placeholder = "" >
+                                           </div>
+                                        </td>
+                                      </tr>
+                                       <tr>
+                                        <td>
+                                            <div class = " col-md-12">
+                                                <input name="name_of_institution[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="location[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="date_of_entering[]" class = "form-control input-sm date_of_entering" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="date_of_leaving[]" class = "form-control input-sm date_of_leaving" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                              <input name="certificate_or_diploma[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div class = "col-md-12">
+                                                <input name="grade_or_division[]" class = "form-control input-sm" type = "text" placeholder = "" >
+                                           </div>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="6">
+
+                                            <button type = "button" class = "btn btn-primary" onclick="updatetab(3)">&nbsp;Next&nbsp;</button>
+                                        </td>
+                                    </tr>
                                 </table>
-                            <div class="row">
-                                <table style="width:100%;">
+                            
+                                
+                            
+                              
+                        </div>
+                        <div id="tabs-4">
+                            <table class=" table table-condensed" >
                                     <tr>
                                         <td  class="col-md-12">
                                            <div class = "form-group">
@@ -635,60 +673,64 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     <td  class="col-md-12">
                                         <table style="width:100%" class="table-bordered table-condensed">
                                             <tr>
-                                                <td colspan="2">College or University Majors(s):</td>
+                                                <td colspan="2"><b>College or University Majors(s):</b></td>
                                             </tr>
                                             <tr>
-                                                <td class="col-md-6">Major in Undergraduate Studies:</td>
-                                                <td class="col-md-6">Major in Graduate Studies:</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-md-6">
-                                                     <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "Subject 1">
-                                                </td>
-                                                <td class="col-md-6">
-                                                    <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "Subject 1">
-                                                </td>
+                                                <td class="col-md-6"><b>Major in Undergraduate Studies:</b></td>
+                                                <td class="col-md-6"><b>Major in Graduate Studies:</b></td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-6">
-                                                     <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "Subject 2">
+                                                     <input name="major_in_undergraduate[]" class = "form-control input-sm" type = "text" placeholder = "Subject 1">
                                                 </td>
                                                 <td class="col-md-6">
-                                                    <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "Subject 2">
+                                                    <input name="major_in_graduate[]" class = "form-control input-sm" type = "text" placeholder = "Subject 1">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-6">
-                                                     <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "Subject 3">
+                                                     <input name="major_in_undergraduate[]" class = "form-control input-sm" type = "text" placeholder = "Subject 2">
                                                 </td>
                                                 <td class="col-md-6">
-                                                    <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "Subject 3">
+                                                    <input name="major_in_graduate[]" class = "form-control input-sm" type = "text" placeholder = "Subject 2">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="col-md-6">
-                                                     <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "Subject 4">
+                                                     <input name="major_in_undergraduate[]" class = "form-control input-sm" type = "text" placeholder = "Subject 3">
                                                 </td>
                                                 <td class="col-md-6">
-                                                    <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "Subject 4">
+                                                    <input name="major_in_graduate[]" class = "form-control input-sm" type = "text" placeholder = "Subject 3">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col-md-6">
+                                                     <input name="major_in_undergraduate[]" class = "form-control input-sm" type = "text" placeholder = "Subject 4">
+                                                </td>
+                                                <td class="col-md-6">
+                                                    <input name="major_in_graduate[]" class = "form-control input-sm" type = "text" placeholder = "Subject 4">
                                                 </td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td >
+
+                                        <button type = "button" class = "btn btn-primary" onclick="updatetab(4)">&nbsp;Next&nbsp;</button>
+                                    </td>
+                                </tr>
                                 </table>  
-                            </div>
-                              
-                        </div>
-                        <div id="tabs-3">
-                            <table style="width:100%;">
+                        </div>              
+                        <div id="tabs-5">
+                            <table class=" table table-condensed" >
                              <tr>
                               <td colspan="2">
                                  <div class = "form-group">
-                                     <label for = "firstname" class = "col-md-4 control-label" style="text-align:left;">
+                                     <label for = "firstname" class = "col-md-3 control-label" style="text-align:left;">
                                          {{ Form::label('title','Years of English Medium Schooling:')}}
                                     </label>
-                                    <div class = "col-md-8">
+                                    <div class = "col-md-9">
                                         {{ Form::text('years_of_english_medium',null,array('id'=>'years_of_english_medium','class' => 'form-control input-sm','placeholder'=>''))}}
 
                                     </div>
@@ -722,8 +764,8 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                           
                           
                           <tr>
-                              <td colspan="2" class="col-md-12">
-                                  <table style="width:100%" class="table-bordered table-condensed">
+                              <td  class="col-md-6">
+                                  <table  class="table-bordered table-condensed">
                                       <tr>
                                           <td colspan="5">(Rate yourself E-Excellent, G-Good, F-Fair, P-Poor)</td>
                                       </tr>
@@ -736,73 +778,72 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                       </tr>
                                       <tr>
                                           <td class="col-md-4">
-                                               <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "Language 1">
+                                               <input name="name_of_language[]" class = "form-control input-sm" type = "text" placeholder = "Language 1">
                                           </td>
                                           <td class="col-md-2">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="reading_level[]" class = "form-control input-sm" type = "text" placeholder = "">
                                           </td>
                                           <td class="col-md-2">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="writing_level[]" class = "form-control input-sm" type = "text" placeholder = "">
                                           </td>
                                           <td class="col-md-2">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="speaking_level[]" class = "form-control input-sm" type = "text" placeholder = "">
                                           </td>
                                           <td class="col-md-2">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="listening_level[]" class = "form-control input-sm" type = "text" placeholder = "">
                                           </td>
                                       </tr>
                                       <tr>
                                           <td class="col-md-4">
-                                               <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "Language 2">
+                                               <input name="name_of_language[]" class = "form-control input-sm" type = "text" placeholder = "Language 2">
                                           </td>
                                           <td class="col-md-2">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="reading_level[]" class = "form-control input-sm" type = "text" placeholder = "">
                                           </td>
                                           <td class="col-md-2">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="writing_level[]" class = "form-control input-sm" type = "text" placeholder = "">
                                           </td>
                                           <td class="col-md-2">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="speaking_level[]" class = "form-control input-sm" type = "text" placeholder = "">
                                           </td>
                                           <td class="col-md-2">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="listening_level[]" class = "form-control input-sm" type = "text" placeholder = "">
                                           </td>
                                       </tr>
                                       <tr>
                                           <td class="col-md-4">
-                                               <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "Language 3">
+                                               <input name="name_of_language[]" class = "form-control input-sm" type = "text" placeholder = "Language 3">
                                           </td>
                                           <td class="col-md-2">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="reading_level[]" class = "form-control input-sm" type = "text" placeholder = "">
                                           </td>
                                           <td class="col-md-2">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="writing_level[]" class = "form-control input-sm" type = "text" placeholder = "">
                                           </td>
                                           <td class="col-md-2">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="speaking_level[]" class = "form-control input-sm" type = "text" placeholder = "">
                                           </td>
                                           <td class="col-md-2">
-                                              <input name="name_of_leaving[]" class = "form-control input-sm" type = "text" placeholder = "">
+                                              <input name="listening_level[]" class = "form-control input-sm" type = "text" placeholder = "">
                                           </td>
                                       </tr>
                                       
                                   </table>
                               </td>
-                          </tr>
-                          <tr>
-                              <td colspan="2" style="text-align:left; padding-top: 10px;">
-                                 <div class = "form-group">
+                              <td class="col-md-6">
+                                  <div class = "form-group">
                                     <label for = "firstname" class = "col-md-3 control-label">
                                          {{ Form::label('title','Honors and Awards if any:')}}
                                     </label>
 
                                    <div class = "col-md-9">
-                                       {{ Form::textarea('honors_awards',null,array('id'=>'honors_awards','class' => 'form-control input-sm','placeholder'=>'Honors and Awards','rows'=>'3'))}}
+                                       {{ Form::textarea('honors_awards',null,array('id'=>'honors_awards','class' => 'form-control input-sm','placeholder'=>'Honors and Awards','rows'=>'8'))}}
 
                                    </div>
                                 </div>
                               </td>
-                            </tr>
+                          </tr>
+                          
                            <tr>
                               <td colspan="2" style="text-align:left;">
                                  <div class = "form-group">
@@ -817,10 +858,16 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                                <td colspan="2">
+
+                                    <button type = "button" class = "btn btn-primary" onclick="updatetab(5)">&nbsp;Next&nbsp;</button>
+                                </td>
+                            </tr>
                             </table>
                         </div>
-                        <div id="tabs-4">
-                            <table style="width:100%;">
+                        <div id="tabs-6">
+                            <table class=" table table-condensed" style="width:100%;">
                           
                           
                           
@@ -912,12 +959,19 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                  </div>
                               </td> 
                             </tr>
-                            
+                            <tr>
+                              <td colspan="2">
+                                  
+                                  {{ Form::submit('Save Student',array('class' => 'btn btn-circle btn-primary')) }}
+                                    
+                                  <button type = "button" class = "btn btn-primary" onclick="updatetab(6)">&nbsp;Next&nbsp;</button>
+                              </td>
+                            </tr>
                           
                       </table> 
                         </div>
                       
-                      <div id="tabs-5">
+                        <div id="tabs-7">
                             <table style="width:100%;">
                             <tr>
                                 <td colspan="2">
@@ -993,18 +1047,20 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                  </div>
                               </td>
                             </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class = "col-md-offset-5 col-md-5">
+                                        {{ Form::submit('Save Student',array('class' => 'btn btn-circle btn-primary')) }}
+                                    </div>
+                                </td>
+                            </tr>
                           
-                      </table> 
+                      </table>
+                          
                         </div>
                       <!-- end of tabs -->
                       </div>
                       </div>
-                        <div class="row">
-                            <div class = "col-md-offset-5 col-md-5">
-                                {{ Form::submit('Save Student',array('class' => 'btn btn-circle btn-primary')) }}
-                            </div>
-                        </div>
-                      
                     {!! Form::Close()!!}
                 </div>
                 <div class="modal-footer">
@@ -1038,24 +1094,47 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
               changeMonth: true,
               changeYear: true,
               yearRange: "-60:+0",
-            });
+              dateFormat: "yy-mm-dd"
+            }).datepicker("setDate", new Date());
             $( "#admission_date" ).datepicker({
               changeMonth: true,
               changeYear: true,
               yearRange: "-60:+0",
-            });
+              dateFormat: "yy-mm-dd"
+            }).datepicker("setDate", new Date());
             $( "#fee_code_date" ).datepicker({
               changeMonth: true,
               changeYear: true,
               yearRange: "-60:+0",
-            });
+              dateFormat: "yy-mm-dd"
+            }).datepicker("setDate", new Date());
+            
             $( "#sponsor_sign_date" ).datepicker({
               changeMonth: true,
               changeYear: true,
               yearRange: "-60:+0",
-            });
+              dateFormat: "yy-mm-dd",
+            }).datepicker("setDate", new Date());
+            
+            // date_of_leaving
+            $( ".date_of_entering" ).datepicker({
+              changeMonth: true,
+              changeYear: true,
+              yearRange: "-60:+0",
+              dateFormat: "yy-mm-dd",
+            }).datepicker("setDate", new Date());
+            $( ".date_of_leaving" ).datepicker({
+              changeMonth: true,
+              changeYear: true,
+              yearRange: "-60:+0",
+              dateFormat: "yy-mm-dd",
+            }).datepicker("setDate", new Date());
+           // $('#tabs').tabs('select', '#tabs-7');
             
           });
+          function updatetab(index){
+              $("#tabs").tabs({ active: index });
+          }
           </script>
 @endsection
 

@@ -9,8 +9,20 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script>
-function myFunction() {
-    confirm("Press a button!");
+function crearform(){
+    $("#visitor_edit_id").val("");
+    $("#visitor_id").val("");
+    $("#first_name").val("");
+    $("#last_name").val("");
+    $("#mobile").val("");
+    $("#program").val("BS Civil").change();
+    $("#information_source").val("");
+    $('input[name="visit_type"][value="call"]').attr('checked',true);
+}
+function myFunction(visitor_id) {
+    $("#visitor_id").val(visitor_id);
+    $("#visitor_edit_id").val(visitor_id);
+    //alert(visitor_id);
 }
 function setDelete(visitor_id){
     $("#visitor_id").val(visitor_id);
@@ -90,7 +102,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Insert New Visitor</button>
+                    <button type="button" class="btn btn-danger" onclick="crearform()" data-toggle="modal" data-target="#myModal">Insert New Visitor</button>
                     <a  href="{{url('/visitor-export-excel')}}" target="_blank" class="btn btn-success">Export to Excel</a>
                     <a  href="{{url('/visitor-export-pdf')}}" target="_blank" class="btn btn-success">Export to PDF</a>
                 </div>
@@ -121,7 +133,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     <td><?php echo $student->visit_type; ?></td>
                                     <td><?php echo $student->dealt_by; ?></td>
                                     <td><?php echo $student->status; ?></td>
-                                    <td><button class="btn btn-danger btn-sm glyphicon glyphicon-refresh"> Edit </button> &nbsp;&nbsp;
+                                    <td><button class="btn btn-danger btn-sm glyphicon glyphicon-refresh" id="edit_button" onclick="myFunction(<?php echo $student->id;?>)"  data-toggle="modal" data-target="#myModal" > Edit </button> &nbsp;&nbsp;
                                             <button class="btn btn-sm btn-danger" type="button" onclick="setDelete(<?php echo $student->id;?>);" data-toggle="modal" data-target="#confirmDelete" data-title="Delete User" data-message="Are you sure you want to delete this user ?">
                                             <i class="glyphicon glyphicon-trash"></i> Delete
                                         </button>
@@ -134,13 +146,37 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
             </div>
                     
         </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        function setVisitor(visitor_id){
+            $("#visitor_edit_id").val(visitor_id);
+        }
+        $("#edit_button").click(function(){
+            var id = $("#visitor_id").val();
+            $.getJSON( "visitor_in_json?id="+id, function( json ) {
+                //$("#visitor_id").val(json.id);
+                $("#first_name").val(json.first_name);
+                $("#last_name").val(json.last_name);
+                $("#mobile").val(json.mobile);
+                $("#program").val(json.program).change();
+                $("#information_source").val(json.information_source);
+                $('input[name="visit_type"][value="' + json.visit_type + '"]').attr('checked',true);
+                //$.each( json, function( key, val ) {
+                    //console.log( "JSON Data: " + json.id + " val "+ val );
+                    
+                  //});
+                
+           });
+        });
+    });
+</script>
 <div class="modal fade" id="myModal" role="dialog" style=" margin: 0px;">
     <div class="modal-dialog" style="width: 90%;height: 90%;display: inline-block;text-align: center;vertical-align: middle;">
               <!-- Modal content-->
               <div class="modal-content" style="height: 90%;min-height: 90%;height: auto;border-radius: 0;">
                   <div class="modal-header" style=" background-color: #ac2925; color: white; font-size: 23px;">
                       <button type="button" class="close" data-dismiss="modal"><span class=" glyphicon glyphicon-remove"></span></button>
-                  <h4 class="modal-title">Insert Visitor Record</h4>
+                  <h4 class="modal-title">Manage Visitor Record</h4>
                 </div>
                   <div style="width:900px;">
                       {!! Form::Open(array ('url' => '/add_visitor','class'=>'form-horizontal')) !!}
@@ -153,6 +189,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     </label>
 
                                    <div class = "col-md-7">
+                                       <input type="hidden" name="visitor_edit_id" id="visitor_edit_id" value="">
                                        {{ Form::text('first_name',null,array('id'=>'first_name','class' => 'form-control input-sm','placeholder'=>'Enter First Name'))}}
 
                                    </div>

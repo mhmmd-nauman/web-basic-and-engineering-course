@@ -16,10 +16,10 @@ class CreateStudentsLanguageRatingsTable extends Migration
         Schema::create('students_language_ratings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('language_name')->nullable();
-            $table->enum('reading', ['E', 'G','F','P']);
-            $table->enum('writing', ['E', 'G','F','P']);
-            $table->enum('speaking', ['E', 'G','F','P']);
-            $table->enum('listening', ['E', 'G','F','P']);
+            $table->enum('reading', ['E', 'G','F','P'])->nullable();
+            $table->enum('writing', ['E', 'G','F','P'])->nullable();
+            $table->enum('speaking', ['E', 'G','F','P'])->nullable();
+            $table->enum('listening', ['E', 'G','F','P'])->nullable();
             $table->integer('student_id'); // 
             $table->timestamps();
         });
