@@ -5,14 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB; 
 use App\Http\Requests;
-use App\Bear;
 use App\Student;
 use App\Visitor;
 use App\StudentEducation;
 use App\StudentPreviousMajorSubjects;
 use App\StudentLanguageRating;
 use App\Http;
-use App\models\Fish;
 use App;
 use Auth;
 use Excel;
@@ -44,10 +42,23 @@ class StudentController extends Controller
             });
         })->export('xls');
     }
+    
     public function getstudent_in_json(Request $request){
         return Student::find($request->id)->toJson();
     }
-
+    
+    public function getstudent_edu_in_json(Request $request){
+        return Student::find($request->id)->student_educations->toJson();
+    }
+    
+    public function getstudent_pre_major_subjects_in_json(Request $request){
+        return Student::find($request->id)->student_pre_major_subjects->toJson();
+    }
+    
+    public function student_langauage_ratings_in_json(Request $request){
+        return Student::find($request->id)->student_language_ratings->toJson();
+    }
+    
     public function getstudents(Request $request){
         
         $user_id = Auth::user()->id;
@@ -80,55 +91,41 @@ class StudentController extends Controller
                     ->where('admission_status','=','accepted')
                     ->whereDate('created_at', '=', date('Y-m-d'))->get();
         }
+        foreach($students as $student){
+            //echo $student->student_educations;
+        }
         //$students = DB::table('students')->get();
         return view('students.list_students', compact('students'),['report_title'=>$report_title]);
-    }
-     public function getpicnic(){
-        $users = DB::table('picnics')->get();
-
-        return view('my.picnic', ['users' => $users]);
-    }
-     public function getfish(){
-        $users = DB::table('fish')->get();
-
-        return view('my.fish', ['users' => $users]);
-    }
-     public function gettree(){
-        $users = DB::table('trees')->get();
-
-        return view('my.trees', ['users' => $users]);
-    }
-    
-    
-    public function remove_student(Request $request){
-         Student::destroy($request->visitor_id);
-         $request->session()->flash('flash_message', 'Visitor was successful removed!');
-         return back();
     }
     public function add_student(Request $request){
         
         
-        $student = new Student();
-        $student->visitor_id = $request->get('visitor_id');
-        $student->first_name = $request->get('first_name');
-        $student->last_name  = $request->get('last_name');
-        $student->program    = $request->get('program');
-        $student->semester = $request->get('semester');
+        
+        if($request->student_id_edit){
+            $student = Student::find($request->student_id_edit);
+        }else{
+            $student = new Student();
+        }
+        $student->visitor_id    = $request->get('visitor_id');
+        $student->first_name    = $request->get('first_name');
+        $student->last_name     = $request->get('last_name');
+        $student->program       = $request->get('program');
+        $student->semester      = $request->get('semester');
         //$student->information_source = $request->get('information_source');
-        $student->mobile     = $request->get('mobile');
+        $student->mobile        = $request->get('mobile');
         //$student->semester = $request->get('semester');
-        $student->father_name = $request->get('father_name');
-        $student->mobile = $request->get('mobile');
-        $student->address = $request->get('address');
+        $student->father_name   = $request->get('father_name');
+        $student->mobile        = $request->get('mobile');
+        $student->address       = $request->get('address');
         $student->father_occupation = $request->get('father_occupation');
-        $student->email = $request->get('email');
-        $student->gender = $request->get('gender');
+        $student->email         = $request->get('email');
+        $student->gender        = $request->get('gender');
         $student->marital_status = $request->get('marital_status');
-        $student->date_of_birth = date("Y-m-d",  strtotime($request->get('date_of_birth')));
-        $student->country_of_citizenship = $request->get('country_of_citizenship');
-        $student->cnic = $request->get('cnic');
-        $student->phone = $request->get('phone');
-        $student->postal_address = $request->get('postal_address');
+        $student->date_of_birth             = date("Y-m-d",  strtotime($request->get('date_of_birth')));
+        $student->country_of_citizenship    = $request->get('country_of_citizenship');
+        $student->cnic                      = $request->get('cnic');
+        $student->phone                     = $request->get('phone');
+        $student->postal_address            = $request->get('postal_address');
         // end of tab 1
         
         $student->candidate_for_any_degree_title = $request->get('candidate_for_any_degree_title');
@@ -163,55 +160,123 @@ class StudentController extends Controller
         }
         
         // update education table
-        $i=0;
-        foreach($request->name_of_institution as $name_of_institution){
-            $st_edu = new StudentEducation();
-            $st_edu->institution_name = $name_of_institution;
-            $st_edu->location = $request->location[$i];
-            $st_edu->date_of_entering = $request->date_of_entering[$i];
-            $st_edu->date_of_leaving = $request->date_of_leaving[$i];
-            $st_edu->degree_receive = $request->certificate_or_diploma[$i];
-            $st_edu->grade = $request->grade_or_division[$i];
-            $st_edu->student_id = $student->id;
-            $st_edu->save();
-            $i++;
-        }
-        $i=0;
-        // update previouus major subjects StudentPreviousMajorSubjects
-        foreach($request->major_in_undergraduate as $major_in_undergraduate){
-            $st_pre_sub = new StudentPreviousMajorSubjects();
-            $st_pre_sub->subject_name = $major_in_undergraduate;
-            $st_pre_sub->subject_type = 'undergraduate';
-            $st_pre_sub->student_id = $student->id;
-            $st_pre_sub->save();
-            $i++;
-        }
-        $i=0;
-        foreach($request->major_in_graduate as $major_in_graduate){
-            $st_pre_sub = new StudentPreviousMajorSubjects();
-            $st_pre_sub->subject_name  = $major_in_graduate;
-            $st_pre_sub->subject_type = 'graduate';
-            $st_pre_sub->student_id = $student->id;
-            $st_pre_sub->save();
-            $i++;
-        }
-        $i=0;
-        // student languages data
-        foreach($request->name_of_language as $name_of_language){
-            $st_pre_sub = new StudentLanguageRating();
-            $st_pre_sub->language_name  = $name_of_language;
-            $st_pre_sub->reading = $request->reading_level[$i];
-            $st_pre_sub->writing = $request->writing_level[$i];
-            $st_pre_sub->speaking = $request->speaking_level[$i];
-            $st_pre_sub->listening = $request->listening_level[$i];
-            $st_pre_sub->student_id = $student->id;
-            $st_pre_sub->save();
-            $i++;
+        $edu_data =  explode(",",$request->student_education_ids);
+        if(!empty($edu_data[0])){
+            // update exisitng records
+            $i=0;
+            foreach($edu_data as $id){
+                if($id > 0){
+                    $st_edu = StudentEducation::find($id);
+                    $st_edu->institution_name   = $request->name_of_institution[$i];
+                    $st_edu->location = $request->location[$i];
+                    $st_edu->date_of_entering   = $request->date_of_entering[$i];
+                    $st_edu->date_of_leaving    = $request->date_of_leaving[$i];
+                    $st_edu->degree_receive     = $request->certificate_or_diploma[$i];
+                    $st_edu->grade              = $request->grade_or_division[$i];
+                    $st_edu->save();
+                }
+                $i++;
+            }
+            // undergraduaate subjects
+            $major_sub_undergraduate_data =  explode(",",$request->student_major_sub_undergraduate_ids);
+            $i=0;
+            foreach($major_sub_undergraduate_data as $id){
+                if($id > 0){
+                    $st_pre_sub = StudentPreviousMajorSubjects::find($id);
+                    $st_pre_sub->subject_name = $request->major_in_undergraduate[$i];
+                    //$st_pre_sub->subject_type = 'undergraduate';
+                    $st_pre_sub->save();
+                }
+                $i++;
+            }
+            // graduaate subjects
+            $major_sub_graduate_data =  explode(",",$request->student_major_sub_graduate_ids);
+            $i=0;
+            foreach($major_sub_graduate_data as $id){
+                if($id > 0){
+                    $st_pre_sub = StudentPreviousMajorSubjects::find($id);
+                    $st_pre_sub->subject_name = $request->major_in_graduate[$i];
+                    //$st_pre_sub->subject_type = 'undergraduate';
+                    $st_pre_sub->save();
+                }
+                $i++;
+            }
+            // handle language rating
+            $language_rating_data =  explode(",",$request->student_language_ratings_ids);
+            $i=0;
+            foreach($language_rating_data as $id){
+                if($id > 0){
+                    $st_pre_sub = StudentLanguageRating::find($id);
+                    $st_pre_sub->language_name  = $request->name_of_language[$i];
+                    $st_pre_sub->reading        = $request->reading_level[$i];
+                    $st_pre_sub->writing        = $request->writing_level[$i];
+                    $st_pre_sub->speaking       = $request->speaking_level[$i];
+                    $st_pre_sub->listening      = $request->listening_level[$i];
+                    $st_pre_sub->student_id     = $student->id;
+                    $st_pre_sub->save();
+                }
+                $i++;
+            }
+            
+        }else{
+            // new record
+            $i=0;
+            foreach($request->name_of_institution as $name_of_institution){
+
+                $st_edu = new StudentEducation();
+                $st_edu->institution_name = $name_of_institution;
+                $st_edu->location = $request->location[$i];
+                $st_edu->date_of_entering = $request->date_of_entering[$i];
+                $st_edu->date_of_leaving = $request->date_of_leaving[$i];
+                $st_edu->degree_receive = $request->certificate_or_diploma[$i];
+                $st_edu->grade = $request->grade_or_division[$i];
+                $st_edu->student_id = $student->id;
+                $st_edu->save();
+                $i++;
+            }
+            // insert previouus major subjects StudentPreviousMajorSubjects
+            $i=0;
+            foreach($request->major_in_undergraduate as $major_in_undergraduate){
+                $st_pre_sub = new StudentPreviousMajorSubjects();
+                $st_pre_sub->subject_name = $major_in_undergraduate;
+                $st_pre_sub->subject_type = 'undergraduate';
+                $st_pre_sub->student_id = $student->id;
+                $st_pre_sub->save();
+                $i++;
+            }
+            $i=0;
+            foreach($request->major_in_graduate as $major_in_graduate){
+                $st_pre_sub = new StudentPreviousMajorSubjects();
+                $st_pre_sub->subject_name  = $major_in_graduate;
+                $st_pre_sub->subject_type = 'graduate';
+                $st_pre_sub->student_id = $student->id;
+                $st_pre_sub->save();
+                $i++;
+            }
+            $i=0;
+            // insert student languages data
+            foreach($request->name_of_language as $name_of_language){
+                $st_pre_sub = new StudentLanguageRating();
+                $st_pre_sub->language_name  = $name_of_language;
+                $st_pre_sub->reading = $request->reading_level[$i];
+                $st_pre_sub->writing = $request->writing_level[$i];
+                $st_pre_sub->speaking = $request->speaking_level[$i];
+                $st_pre_sub->listening = $request->listening_level[$i];
+                $st_pre_sub->student_id = $student->id;
+                $st_pre_sub->save();
+                $i++;
+            }
         }
         
         $request->session()->flash('flash_message', 'Visitor was successful added!');
         return redirect('student');
         //return back();
+    }
+    public function remove_student(Request $request){
+        $request->student_id;
+        Student::destroy($request->student_id);
+        $request->session()->flash('flash_message', 'Visitor was successful removed!');
+        return back();
     }
     
 }

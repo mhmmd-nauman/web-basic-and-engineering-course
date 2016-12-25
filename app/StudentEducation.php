@@ -13,8 +13,8 @@ class StudentEducation extends Model {
     protected $table = 'students_education';
 
     // DEFINE RELATIONSHIPS --------------------------------------------------
-    public function bear() {
-        return $this->belongsTo('App\Bear');
+    public function student() {
+        return $this->belongsTo('App\Student');
     }
 
 }

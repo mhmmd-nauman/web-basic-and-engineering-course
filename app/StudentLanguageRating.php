@@ -13,8 +13,8 @@ class StudentLanguageRating extends Model {
     protected $table = 'students_language_ratings';
 
     // DEFINE RELATIONSHIPS --------------------------------------------------
-    public function bear() {
-        return $this->belongsTo('App\Bear');
+    public function student() {
+        return $this->belongsTo('App\Student');
     }
 
 }

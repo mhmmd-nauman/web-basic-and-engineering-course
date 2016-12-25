@@ -33,6 +33,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/student','StudentController@getstudents');
     //Route::get('/student_in_json','StudentController@getstudent_in_json');
     Route::post('/add_student','StudentController@add_student');
+    Route::post('/remove_student','StudentController@remove_student');
+    Route::get('/student_in_json','StudentController@getstudent_in_json');
+    Route::get('/student_education_in_json','StudentController@getstudent_edu_in_json');
+    Route::get('/student_pre_major_subjects_in_json','StudentController@getstudent_pre_major_subjects_in_json');
+    Route::get('/student_langauage_ratings_in_json','StudentController@student_langauage_ratings_in_json');
     // end of student routes
     Route::get('/bear','bearController@getbear');
     Route::get('/picnic','bearController@getpicnic');

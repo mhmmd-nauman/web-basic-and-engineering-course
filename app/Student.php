@@ -15,10 +15,18 @@ class Student extends Model {
     }
 
     // each bear climbs many trees
-    public function trees() {
-        return $this->hasMany('App\Tree');
+    public function student_educations() {
+        return $this->hasMany('App\StudentEducation');
     }
-
+    
+    public function student_pre_major_subjects() {
+        return $this->hasMany('App\StudentPreviousMajorSubjects');
+    }
+    
+    public function student_language_ratings() {
+        return $this->hasMany('App\StudentLanguageRating');
+    }
+    
     // each bear BELONGS to many picnic
     // define our pivot table also
     public function picnics() {
