@@ -38,7 +38,24 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/student_education_in_json','StudentController@getstudent_edu_in_json');
     Route::get('/student_pre_major_subjects_in_json','StudentController@getstudent_pre_major_subjects_in_json');
     Route::get('/student_langauage_ratings_in_json','StudentController@student_langauage_ratings_in_json');
+    Route::get('/student-pdf-form/{id}','StudentController@student_form_in_pdf');
     // end of student routes
+    
+    // department routes
+    Route::get('/department','DepartmentController@index');
+    Route::post('/add_department','DepartmentController@add_department');
+    Route::post('/remove_department','DepartmentController@remove_department');
+    Route::get('/department_in_json','DepartmentController@department_in_json');
+    // end of department routes
+    
+    // program routes
+    Route::get('/program','ProgramOfferedController@index');
+    Route::post('/add_program','ProgramOfferedController@add_program');
+    Route::post('/remove_program','ProgramOfferedController@remove_program');
+    Route::get('/program_in_json','ProgramOfferedController@program_in_json');
+    // end of program routes
+    
+    
     Route::get('/bear','bearController@getbear');
     Route::get('/picnic','bearController@getpicnic');
     Route::get('/fish','bearController@getfish');

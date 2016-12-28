@@ -16,7 +16,7 @@ class CreateStudentTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->increments('id');
             //$table->string('file');
-            $table->enum('semester', ['spring', 'fall','summer'])->nullable();
+            $table->enum('semester', ['Spring', 'Fall','Summer'])->nullable();
             $table->integer('visitor_id')->nullable();
             
             $table->string('first_name');
@@ -24,8 +24,8 @@ class CreateStudentTable extends Migration
             //$table->string('information_source')->nullable();
             $table->string('father_name')->nullable();
             $table->string('father_occupation')->nullable();
-            $table->enum('gender', ['male', 'female'])->nullable();
-            $table->enum('marital_status', ['maried', 'unmaried'])->nullable();
+            $table->enum('gender', ['Male', 'Female'])->nullable();
+            $table->enum('marital_status', ['Maried', 'Unmaried'])->nullable();
             $table->dateTime('date_of_birth')->nullable();
             $table->string('country_of_citizenship')->nullable();
             $table->string('cnic')->nullable();
@@ -40,6 +40,7 @@ class CreateStudentTable extends Migration
             $table->string('first_language')->nullable();
             $table->string('honors_awards')->nullable();
             $table->string('fav_activities')->nullable();
+            $table->integer('program_id')->unsigned();
             $table->string('program')->nullable();
             $table->string('applicant_name')->nullable();
             $table->string('privately_supported_student')->nullable();
@@ -49,7 +50,7 @@ class CreateStudentTable extends Migration
             $table->dateTime('sponsor_sign_date')->nullable();
             $table->string('interviewed_by')->nullable();
             $table->string('chairman_admission_committee')->nullable();
-            $table->enum('admission_status', ['done', 'info','accepted','rejected'])->nullable();
+            $table->enum('admission_status', ['Done', 'Info','Accepted','Rejected'])->nullable();
             $table->dateTime('admission_date')->nullable();
             $table->float('fee_code')->unsigned();
             $table->dateTime('fee_code_date')->nullable();

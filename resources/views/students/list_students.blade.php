@@ -15,7 +15,7 @@ function crearform(){
     $("#father_occupation").val("");
     $("#email").val("");
     $("#address").val("");
-    $('input[name="marital_status"][value="unmaried"]').attr('checked',true);
+    $('input[name="marital_status"][value="Unmaried"]').attr('checked',true);
     $("#date_of_birth").val("");
     $("#country_of_citizenship").val("");
     $("#cnic").val("");
@@ -44,6 +44,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
         
         function setVisitor(visitor_id){
             $("#visitor_edit_id").val(visitor_id);
+            $("#visitor_id").val(visitor_id);
         }
         $(".edit_button").click(function(){
             var id = $("#student_id_edit").val();
@@ -93,9 +94,9 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                 $("#fee_code").val(json.fee_code);
                 $("#fee_code_date").val(json.fee_code_date);
                 //$.each( json, function( key, val ) {
-                  //  console.log( "JSON Data: " + key + " val "+ val );
+                //    console.log( "JSON Data: " + key + " val "+ val );
                     
-                 // });
+                //  });
                 
            });
            // next jason request
@@ -247,7 +248,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                             <th>Semester</th>
                             <th>DealtBy</th>
                             <th>Status</th>
-                            <th>Edit / Delete</th>
+                            <th>Actions</th>
                         </tr>
                    </thead>
                     <tbody>
@@ -261,11 +262,27 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                 <td><?php echo $student->semester; ?></td>
                                 <td><?php echo $student->dealt_by; ?></td>
                                 <td><?php echo $student->admission_status; ?></td>
-                                <td><button class="btn btn-danger btn-sm glyphicon glyphicon-refresh edit_button"  onclick="myFunction(<?php echo $student->id;?>)"  data-toggle="modal" data-target="#myModal" > Edit </button> &nbsp;&nbsp;
-                                    <button class="btn btn-sm btn-danger" type="button" onclick="setDelete(<?php echo $student->id;?>);" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Student" data-message="Are you sure you want to delete this record ?">
-                                    <i class="glyphicon glyphicon-trash"></i> Delete
-                                </button>
-
+                                <td>
+                                    <div class = "dropdown pull-right">
+   
+                                        <button type = "button" class = "btn btn-success dropdown-toggle" id = "dropdownMenu_actions" data-toggle = "dropdown">
+                                           Action
+                                           <span class = "caret"></span>
+                                        </button>
+                                        <ul class = "dropdown-menu" role = "menu" aria-labelledby = "dropdownMenu_actions">
+                                            <li role = "presentation">
+                                                <a  href="{{url('/student-pdf-form/'.$student->id)}}" target="_blank" role = "menuitem" tabindex = "-1">PDF Form</a>
+                                            </li>
+                                            <li role = "presentation" class = "divider"></li>
+                                            <li role = "presentation">
+                                                <a  href="#" class="edit_button"  role = "menuitem" tabindex = "-1" onclick="myFunction(<?php echo $student->id;?>)"  data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a  href="#"  role = "menuitem" tabindex = "-1" onclick="setDelete(<?php echo $student->id;?>);" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Student" data-message="Are you sure you want to delete this record ?"> <i class="glyphicon glyphicon-trash"></i> Delete</a>
+                                            </li>
+                                         </ul>
+                                    </div>
+                                    
                             </td>
                             </tr>
                         <?php } ?>
@@ -287,6 +304,10 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
             $.getJSON( "visitor_in_json?id="+id, function( json ) {
                 
                 alert("Visitor Data Loaded!");
+                $("#visitor_id").val(id);
+                $("#first_name").val(json.first_name);
+                $("#last_name").val(json.last_name);
+                $("#program").val(json.program).change();
                 //$.each( json, function( key, val ) {
                     //console.log( "JSON Data: " + json.id + " val "+ val );
                     
@@ -402,11 +423,15 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     <div class = "col-md-7">
                                         <div class = "radio">
                                         <label>
-                                           <input type = "radio" name = "semester" id = "semester" value = "fall" checked> Fall
+                                           <input type = "radio" name = "semester" id = "semester" value = "Fall" checked> Fall
                                         </label>
                                         <label>
-                                           <input type = "radio" name = "semester" id = "semester" value = "spring">
+                                           <input type = "radio" name = "semester" id = "semester" value = "Spring">
                                            Spring
+                                        </label>
+                                        <label>
+                                           <input type = "radio" name = "semester" id = "semester" value = "Summer">
+                                           Summer
                                         </label>
                                      </div>
 
@@ -507,10 +532,10 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                          <div class = "col-md-7">
                                              <div class = "radio">
                                               <label>
-                                                 <input type = "radio" name = "gender" id = "gender" value = "male" checked> Male
+                                                 <input type = "radio" name = "gender" id = "gender" value = "Male" checked> Male
                                               </label>
                                               <label>
-                                                 <input type = "radio" name = "gender" id = "gender" value = "female">
+                                                 <input type = "radio" name = "gender" id = "gender" value = "Female">
                                                  Female
                                               </label>
                                               </div>
@@ -526,10 +551,10 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                           <div class = "col-md-7">
                                               <div class = "radio">
                                               <label>
-                                                 <input type = "radio" name = "marital_status" id = "marital_status" value = "maried" > Married
+                                                 <input type = "radio" name = "marital_status" id = "marital_status" value = "Maried" > Married
                                               </label>
                                               <label>
-                                                 <input type = "radio" name = "marital_status" id = "marital_status" value = "unmaried" checked>
+                                                 <input type = "radio" name = "marital_status" id = "marital_status" value = "Unmaried" checked>
                                                  Unmaried
                                               </label>
                                               </div>
@@ -1142,11 +1167,11 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     </label>
 
                                     <div class = "col-md-2">
-                                        <input type="radio"  name="admission_status" value="accepted" checked>&nbsp;Accepted
+                                        <input type="radio"  name="admission_status" value="Accepted" checked>&nbsp;Accepted
 
                                     </div>
                                       <div class="col-md-2">
-                                          <input type="radio"  name="admission_status" value="rejected">&nbsp;Rejected
+                                          <input type="radio"  name="admission_status" value="Rejected">&nbsp;Rejected
                                       </div>
                                  </div>
                               </td>

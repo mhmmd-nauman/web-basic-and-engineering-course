@@ -9,7 +9,7 @@ function crearform(){
     $("#mobile").val("");
     $("#program").val("BS Civil").change();
     $("#information_source").val("");
-    $('input[name="visit_type"][value="call"]').attr('checked',true);
+    $('input[name="visit_type"][value="Call"]').attr('checked',true);
 }
 function myFunction(visitor_id) {
     $("#visitor_id").val(visitor_id);
@@ -257,10 +257,10 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     <div class = "col-md-7">
                                         <div class = "radio">
                                         <label>
-                                           <input type = "radio" name = "visit_type" id = "visit_type" value = "call" checked> Call
+                                           <input type = "radio" name = "visit_type" id = "visit_type" value = "Call" checked> Call
                                         </label>
                                         <label>
-                                           <input type = "radio" name = "visit_type" id = "visit_type" value = "visit">
+                                           <input type = "radio" name = "visit_type" id = "visit_type" value = "Visit">
                                            Visit
                                         </label>
                                      </div>

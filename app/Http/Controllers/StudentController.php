@@ -15,6 +15,7 @@ use App;
 use Auth;
 use Excel;
 use PDF;
+use SnappyPDF;
 
 class StudentController extends Controller
 {
@@ -32,6 +33,17 @@ class StudentController extends Controller
         $pdf = PDF::loadView('visitors.list_visitors_pdf', compact('students'));
         return $pdf->download('VisitrsReport.pdf');
     }
+    public function student_form_in_pdf(Request $request){
+        $student = Student::find($request->id);
+        $pdf = PDF::loadView('students.admission_form_student_pdf', compact('student'));
+        
+        //$pdf = PDF::loadView('pdf.invoice', $data);
+        //return $pdf->download('invoice.pdf');
+        
+        return $pdf->download("AdmissionForm-".$request->id.".pdf");
+    }
+    
+    
     public function export_student(){
         //http://laraveldaily.com/laravel-excel-export-eloquent-models-results-easily/
         $students = Student::select('id AS ID', 'first_name As First Name', 'last_name AS LastName','mobile As Contact','program as Program','visit_type as CallVisit','information_source as InformationSource','dealt_by as DealtBy','status As AdmissionStatus')->get();
@@ -66,29 +78,29 @@ class StudentController extends Controller
             case'yesterday':
                 $report_title = 'Yesterday - Mine';
                 $students = Student::where('dealtby_id','=',$user_id)
-                    ->where('admission_status','=','accepted')
+                    ->where('admission_status','=','Accepted')
                     ->whereDate('created_at', '=', date('Y-m-d',  strtotime("-1 day")))->get();
                 break;
             case'last7day':
                 $report_title = 'Last 7 Days - Mine';
                 $students = Student::where('dealtby_id','=',$user_id)
-                    ->where('admission_status','=','accepted')
+                    ->where('admission_status','=','Accepted')
                     ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-30 day")))->get();
                 break;
             case'last30day':
                 $report_title = 'Last 30 Days - Mine';
                 $students = Student::where('dealtby_id','=',$user_id)
-                    ->where('admission_status','=','accepted')
+                    ->where('admission_status','=','Accepted')
                     ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-7 day")))->get();
                 break;
             case'viewalldata':
                 $report_title = 'View All Data';
-                $students = Student::where('admission_status','=','accepted');
+                $students = Student::where('admission_status','=','Accepted');
                 break;
             default:
                 $report_title = 'Today - Mine';
                 $students = Student::where('dealtby_id','=',$user_id)
-                    ->where('admission_status','=','accepted')
+                    ->where('admission_status','=','Accepted')
                     ->whereDate('created_at', '=', date('Y-m-d'))->get();
         }
         foreach($students as $student){

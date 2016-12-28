@@ -26,29 +26,29 @@ class VisitorController extends Controller
             case'yesterday':
                 $report_title = 'Yesterday - Mine';
                 $students = Visitor::where('dealtby_id','=',$user_id)
-                    ->where('status','=','info')
+                    ->where('status','=','Info')
                     ->whereDate('created_at', '=', date('Y-m-d',  strtotime("-1 day")))->get();
                 break;
             case'last7day':
                 $report_title = 'Last 7 Days - Mine';
                 $students = Visitor::where('dealtby_id','=',$user_id)
-                        ->where('status','=','info')
+                        ->where('status','=','Info')
                         ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-30 day")))->get();
                 break;
             case'last30day':
                 $report_title = 'Last 30 Days - Mine';
                 $students = Visitor::where('dealtby_id','=',$user_id)
-                        ->where('status','=','info')
+                        ->where('status','=','Info')
                         ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-7 day")))->get();
                 break;
             case'viewalldata':
                 $report_title = 'View All Data';
-                $students = Visitor::where('status','=','info')->get();
+                $students = Visitor::where('status','=','Info')->get();
                 break;
             default:
                 $report_title = 'Today - Mine';
                 $students = Visitor::where('dealtby_id','=',$user_id)
-                        ->where('status','=','info')
+                        ->where('status','=','Info')
                         ->whereDate('created_at', '=', date('Y-m-d'))->get();
         }
         //$students = DB::table('students')->get();
@@ -93,7 +93,7 @@ class VisitorController extends Controller
         $visitor->mobile     = $request->get('mobile');
         $visitor->dealtby_id = Auth::user()->id;
         $visitor->dealt_by   = Auth::user()->name;
-        $visitor->status = 'info';
+        $visitor->status = 'Info';
         $visitor->save();
         $request->session()->flash('flash_message', 'Visitor was successful added!');
         return redirect('visitor');
