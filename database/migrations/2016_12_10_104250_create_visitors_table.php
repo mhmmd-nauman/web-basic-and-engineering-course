@@ -17,6 +17,7 @@ class CreateVisitorsTable extends Migration
             $table->increments('id');
             $table->enum('visit_type', ['Call', 'Visit']);
             $table->string('program')->nullable();
+            $table->integer('program_id')->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('information_source')->nullable();

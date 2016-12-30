@@ -13,6 +13,10 @@ class ProgramOffered extends Model
         return $this->belongsTo('App\Department');
     }
     
+    public function visitor() {
+        return $this->belongsTo('App\Visitor');
+    }
+    
     public function student() {
         return $this->belongsTo('App\Student');
     }

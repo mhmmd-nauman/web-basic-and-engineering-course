@@ -5,8 +5,9 @@ class Visitor extends Model {
     
     protected $table = 'visitors';
     
-    public function fish() {
-        return $this->hasOne('App\Fish'); 
+    public function student_program()
+    {
+        return $this->hasOne('App\ProgramOffered','id','program_id'); 
     }
     
     public function trees() {

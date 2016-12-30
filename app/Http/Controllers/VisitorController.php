@@ -87,7 +87,7 @@ class VisitorController extends Controller
         }
         $visitor->first_name = $request->get('first_name');
         $visitor->last_name  = $request->get('last_name');
-        $visitor->program    = $request->get('program');
+        $visitor->program_id    = $request->get('program');
         $visitor->visit_type = $request->get('visit_type');
         $visitor->information_source = $request->get('information_source');
         $visitor->mobile     = $request->get('mobile');

@@ -9,7 +9,7 @@ function crearform(){
     $("#first_name").val("");
     $("#last_name").val("");
     $("#father_name").val("");
-    $("#program").val("BS Civil").change();
+    $("#program").val("1").change();
     $("#father_name").val("");
     $("#mobile").val("");
     $("#father_occupation").val("");
@@ -17,6 +17,9 @@ function crearform(){
     $("#address").val("");
     $('input[name="marital_status"][value="Unmaried"]').attr('checked',true);
     $("#date_of_birth").val("");
+    $("#sponsor_sign_date").val("");
+    $("#fee_code_date").val("");
+    $("#admission_date").val("");
     $("#country_of_citizenship").val("");
     $("#cnic").val("");
     $("#phone").val("");
@@ -44,7 +47,8 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
         
          $.getJSON( "all_programs_in_json", function( json ) {
                 var $select = $('#program');  
-                $select.find('option').remove(); 
+                $select.find('option').remove();
+                //$("#program").append($('<option>').text("Select Program").attr('value', "0"));
                 $.each( json, function( index, value ) {
                     //console.log( "JSON Data: " + key + " val "+ val.department );
                     //$select.append('<option value=' + key + '>' + value + '</option>');  
@@ -80,10 +84,11 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                 $('input[name="gender"][value="' + json.gender + '"]').attr('checked',true);
                 $('input[name="marital_status"][value="' + json.marital_status + '"]').attr('checked',true);
                 
-                //var myNewObj = JSON.parse(json.date_of_birth);
-                //var myNewDate = new Date(myNewObj.theDate);
-                //alert(myNewDate.getDate());
-                $("#date_of_birth").val(json.date_of_birth);
+                $("#date_of_birth").val("");
+                if(json.date_of_birth !== "1970-01-01"){
+                    $("#date_of_birth").val(json.date_of_birth);
+                }
+                
                 $("#country_of_citizenship").val(json.country_of_citizenship);
                 $("#cnic").val(json.cnic);
 
@@ -100,15 +105,32 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                 $("#privately_supported_student").val(json.privately_supported_student);
                 $("#sponsor_name").val(json.sponsor_name);
                 $("#sponsor_relation").val(json.sponsor_relation);
-                $("#sponsor_sign_date").val(json.sponsor_sign_date);
+                
+                $("#sponsor_sign_date").val("");
+                if(json.sponsor_sign_date !== "1970-01-01"){
+                    $("#sponsor_sign_date").val(json.sponsor_sign_date);
+                }
+                
 
                 $('input[name="admission_status"][value="' + json.admission_status + '"]').attr('checked',true);
-                $("#admission_date").val(json.admission_date);
+                
+                //$("#admission_date").val(json.admission_date);
+                $("#admission_date").val("");
+                if(json.admission_date !== "1970-01-01"){
+                    $("#admission_date").val(json.admission_date);
+                }
+                
                 $("#interviewed_by").val(json.interviewed_by);
                 $("#chairman_admission_committee").val(json.chairman_admission_committee);
 
                 $("#fee_code").val(json.fee_code);
-                $("#fee_code_date").val(json.fee_code_date);
+                //$("#fee_code_date").val(json.fee_code_date);
+                
+                $("#fee_code_date").val("");
+                if(json.fee_code_date !== "1970-01-01"){
+                    $("#fee_code_date").val(json.fee_code_date);
+                }
+                
                 //$.each( json, function( key, val ) {
                 //    console.log( "JSON Data: " + key + " val "+ val );
                     
@@ -219,7 +241,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                             <li role = "presentation" class = "divider"></li>
 
                             <li role = "presentation">
-                               <a role = "menuitem" tabindex = "-1" href = "{{url('/student')}}">Only Mine</a>
+                               <a role = "menuitem" tabindex = "-1" href = "{{url('/student')}}">Only Today - Mine</a>
                             </li>
                             <li role = "presentation">
                                <a role = "menuitem" tabindex = "-1" href = "{{url('/student?load=viewalldata')}}">View All Data</a>
@@ -256,15 +278,17 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                <table class=" display" id="student_table" >
                    <thead> 
                         <tr>
-                            <th>ID</th>
-                            <th>Date</th>
+                            <th style=" width: 5%;">App#</th>
+                            <th style=" width: 10%;">Date</th>
                             <th>Name</th>
-                            <th>Contact</th>
-                            <th>Program</th>
-                            <th>Admission</th>
-                            <th>DealtBy</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th style=" width: 10%;">Roll#</th>
+                            <th style=" width: 5%;">Program</th>
+                            <th style=" width: 10%;">Admission</th>
+                            <!--
+                            <th>Entered By</th>
+                            -->
+                            <th style=" width: 10%;">Status</th>
+                            <th style=" width: 10%;">Actions</th>
                         </tr>
                    </thead>
                     <tbody>
@@ -273,10 +297,12 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                 <td> <?php echo $student->id;?></td>
                                 <td><?php echo date("M d Y",  strtotime($student->created_at));?></td>
                                 <td> <?php echo $student->first_name." ".$student->last_name; ?></td>
-                                <td> <?php echo $student->mobile;  ?></td>
+                                <td> <?php echo $student->roll_number;  ?></td>
                                 <td><?php echo $student->student_program->program_name; ?></td>
                                 <td><?php echo $student->semester." ".date("Y",  strtotime($student->admission_date)); ?></td>
+                                <!--
                                 <td><?php echo $student->dealt_by; ?></td>
+                                -->
                                 <td><?php echo $student->admission_status; ?></td>
                                 <td>
                                     <div class = "dropdown pull-right">
@@ -1172,9 +1198,12 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                                     <label for = "lastname" class = "col-md-4 control-label">
                                          {{ Form::label('title','Admission Status:')}}
                                     </label>
-
                                     <div class = "col-md-2">
-                                        <input type="radio"  name="admission_status" value="Accepted" checked>&nbsp;Accepted
+                                        <input type="radio"  name="admission_status" value="Processing" checked>&nbsp;Processing
+
+                                    </div>
+                                    <div class = "col-md-2">
+                                        <input type="radio"  name="admission_status" value="Accepted" >&nbsp;Accepted
 
                                     </div>
                                       <div class="col-md-2">

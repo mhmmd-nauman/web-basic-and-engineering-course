@@ -17,6 +17,7 @@ class CreateProgramsTable extends Migration
             $table->increments('id');
             $table->string('program_name')->nullable();
             $table->string('duration')->nullable();
+            $table->string('code')->nullable();
             $table->integer('incharge_id')->unsigned();
             $table->foreign('incharge_id')->references('id')->on('users');
             $table->integer('department_id')->unsigned();

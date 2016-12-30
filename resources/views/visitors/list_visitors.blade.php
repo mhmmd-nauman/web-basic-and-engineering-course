@@ -7,7 +7,7 @@ function crearform(){
     $("#first_name").val("");
     $("#last_name").val("");
     $("#mobile").val("");
-    $("#program").val("BS Civil").change();
+    $("#program").val("1").change();
     $("#information_source").val("");
     $('input[name="visit_type"][value="Call"]').attr('checked',true);
 }
@@ -37,6 +37,19 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
 </script>
 <script type="text/javascript">
     $(document).ready(function(){
+        $.getJSON( "all_programs_in_json", function( json ) {
+                var $select = $('#program');  
+                $select.find('option').remove();
+                //$("#program").append($('<option>').text("Select Program").attr('value', "0"));
+                $.each( json, function( index, value ) {
+                    //console.log( "JSON Data: " + key + " val "+ val.department );
+                    //$select.append('<option value=' + key + '>' + value + '</option>');  
+                    $("#program").append($('<option>').text(value.program_name).attr('value', value.id));
+                  });
+                 
+                  
+           });
+        
         function setVisitor(visitor_id){
             $("#visitor_edit_id").val(visitor_id);
         }
@@ -48,7 +61,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                 $("#first_name").val(json.first_name);
                 $("#last_name").val(json.last_name);
                 $("#mobile").val(json.mobile);
-                $("#program").val(json.program).change();
+                $("#program").val(json.program_id).change();
                 $("#information_source").val(json.information_source);
                 $('input[name="visit_type"][value="' + json.visit_type + '"]').attr('checked',true);
                 //$.each( json, function( key, val ) {
@@ -170,7 +183,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                             <td><?php echo date("M d Y",  strtotime($student->created_at));?></td>
                             <td> <?php echo $student->first_name." ".$student->last_name; ?></td>
                             <td> <?php echo $student->mobile;  ?></td>
-                            <td><?php echo $student->program; ?></td>
+                            <td><?php echo $student->student_program->program_name; ?></td>
                             <td><?php echo $student->visit_type; ?></td>
                             <td><?php echo $student->dealt_by; ?></td>
                             <td><?php echo $student->status; ?></td>
@@ -235,15 +248,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
 
                                    <div class = "col-md-7">
                                        <select name="program" id="program" class="form-control input-sm">
-                                           <option value="BS Civil">BS Civil</option>
-                                           <option value="MSC Math">MSC Math</option>
-                                           <option value="MBA 1.5">MBA 1.5</option>
-                                           <option value="MSCS">MSCS</option>
-                                           <option value="M.Phil Edu">M.Phil Edu</option>
-                                           <option value="MSBA">MSBA</option>
-                                           <option value="M.phil Math">M.phil Math</option>
-                                           <option value="M.Phil Pak-Study">M.Phil Pak-Study</option>
-                                           <option value="MSC Math">MSC Math</option>
+                                           
                                        </select>
                                    </div>
                                 </div>

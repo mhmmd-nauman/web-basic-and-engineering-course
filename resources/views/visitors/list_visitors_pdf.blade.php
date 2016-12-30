@@ -22,7 +22,7 @@
                                     <td><?php echo $student->id;?></td>
                                     <td><?php echo $student->first_name." ".$student->last_name; ?></td>
                                     <td><?php echo $student->mobile;  ?></td>
-                                    <td><?php echo $student->program; ?></td>
+                                    <td><?php echo $student->student_program->program_name; ?></td>
                                     <td><?php echo $student->visit_type; ?></td>
                                     <td><?php echo $student->dealt_by; ?></td>
                                 </tr>

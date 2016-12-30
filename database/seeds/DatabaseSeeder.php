@@ -6,6 +6,9 @@ use App\models\Fish;
 use App\models\Tree;
 use App\models\Picnic;
 use App\User;
+use App\Department;
+use App\ProgramOffered;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -47,6 +50,35 @@ class UserSeeder extends Seeder
         
         
         $this->command->info('Users are seeded!');
+        
+        // now seed the departments
+        DB::table('department')->delete();
+        
+
+        $first_dpt = Department::create(array(
+            'department_name'         => 'Computer Science',
+            'contact'         => '0313',
+            'status' => 'Active',
+            'hod_id' => $first_user->id,
+            'entered_id' => $first_user->id,
+        ));
+        
+        $this->command->info('Department are seeded!');
+        
+        // now seed the programs
+        DB::table('programs_offered')->delete();
+        
+
+        $first_program = ProgramOffered::create(array(
+            'program_name'      => 'BSCS',
+            'duration'          => '4',
+            'code'              =>'BS',
+            'status'            => 'Active',
+            'incharge_id'       => $first_user->id,
+            'entered_id'        => $first_user->id,
+            'department_id'     => $first_dpt->id,
+        ));
+        $this->command->info('Program are seeded!');
         
     }
 

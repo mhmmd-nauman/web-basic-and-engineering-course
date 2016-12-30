@@ -10,6 +10,7 @@ use App\Visitor;
 use App\StudentEducation;
 use App\StudentPreviousMajorSubjects;
 use App\StudentLanguageRating;
+use App\ProgramOffered;
 use App\Http;
 use App;
 use Auth;
@@ -78,45 +79,80 @@ class StudentController extends Controller
             case'yesterday':
                 $report_title = 'Yesterday - Mine';
                 $students = Student::where('dealtby_id','=',$user_id)
-                    ->where('admission_status','=','Accepted')
+                   // ->where('admission_status','=','Accepted')
                     ->whereDate('created_at', '=', date('Y-m-d',  strtotime("-1 day")))->get();
                 break;
             case'last7day':
                 $report_title = 'Last 7 Days - Mine';
                 $students = Student::where('dealtby_id','=',$user_id)
-                    ->where('admission_status','=','Accepted')
+                   // ->where('admission_status','=','Accepted')
                     ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-30 day")))->get();
                 break;
             case'last30day':
                 $report_title = 'Last 30 Days - Mine';
                 $students = Student::where('dealtby_id','=',$user_id)
-                    ->where('admission_status','=','Accepted')
+                  //  ->where('admission_status','=','Accepted')
                     ->whereDate('created_at', '>=', date('Y-m-d',  strtotime("-7 day")))->get();
                 break;
             case'viewalldata':
                 $report_title = 'View All Data';
-                $students = Student::where('admission_status','=','Accepted');
+                $students = Student::all();
                 break;
             default:
                 $report_title = 'Today - Mine';
                 $students = Student::where('dealtby_id','=',$user_id)
-                    ->where('admission_status','=','Accepted')
+                   // ->where('admission_status','=','Accepted')
                     ->whereDate('created_at', '=', date('Y-m-d'))->get();
         }
-        foreach($students as $student){
-            //echo $student->student_educations;
-        }
-        //$students = DB::table('students')->get();
+        
         return view('students.list_students', compact('students'),['report_title'=>$report_title]);
     }
     public function add_student(Request $request){
         
-        
-        
         if($request->student_id_edit){
             $student = Student::find($request->student_id_edit);
+            $student_program_code = $student->student_program->code;
         }else{
             $student = new Student();
+            $selected_program =ProgramOffered::find($request->get('program'));
+            $student_program_code = $selected_program->code;
+        }
+        
+        if($student->roll_number == "" && $request->get('admission_status') == "Accepted"){
+            $results = Student::whereYear("admission_date","=",date("Y"))
+                    ->where('roll_number','like',"%$student_program_code%")
+                    ->where('semester','=',$request->get('semester'))
+                    ->orderBy('id', 'desc')->count();
+            if(empty($results)){
+                // issue the first
+                $next_roll_number = $student_program_code.date("y")."0001";
+            }else{
+                 $last_roll_number = Student::whereYear("admission_date","=",date("Y"))
+                    ->where('roll_number','like',"%$student_program_code%")
+                    ->where('semester','=',$request->get('semester'))     
+                    ->orderBy('id', 'desc')->first()->roll_number;
+                 $last_four_characters = intval(substr($last_roll_number, -4));
+                 $last_four_characters++;
+                 //echo strlen($last_four_characters);
+                 $next_roll_number = "";
+                 switch (strlen($last_four_characters)){
+                     case 1:
+                            $next_roll_number .="000".$last_four_characters; 
+                         break;
+                     case 2:
+                            $next_roll_number .="00".$last_four_characters; 
+                         break;
+                     case 3:
+                            $next_roll_number .="0".$last_four_characters; 
+                     break;
+                    default :
+                            $next_roll_number .= $last_four_characters;
+                     break;
+                 }
+                $next_roll_number = $student_program_code.date("y").$next_roll_number;
+            }
+            
+            $student->roll_number = $next_roll_number;
         }
         $student->visitor_id    = $request->get('visitor_id');
         $student->first_name    = $request->get('first_name');
