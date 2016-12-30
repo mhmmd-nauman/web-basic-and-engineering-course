@@ -7,7 +7,11 @@ class Student extends Model {
     // DEFINE RELATIONSHIPS --------------------------------------------------
     
     public function fish() {
-        return $this->hasOne('App\Fish'); 
+        return $this->hasOne('App\Fish','foreign_key', 'local_key'); 
+    }
+    public function student_program()
+    {
+        return $this->hasOne('App\ProgramOffered','id','program_id'); 
     }
     public function student_educations() {
         return $this->hasMany('App\StudentEducation');

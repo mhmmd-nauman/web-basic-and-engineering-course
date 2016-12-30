@@ -163,7 +163,7 @@
                        {{ Form::label('title','Date of Birth:')}}
                     </td>
                     <td class="table_right_cell_line">
-                        <?php echo $student->date_of_birth;?>
+                        <?php echo date("Y-m-d",  strtotime($student->date_of_birth));?>
                     </td>
                      
                     <td class="table_left_cell_inner">
@@ -206,7 +206,7 @@
                     Educational Background
                 </h4>
                 </div>
-                <table  style="width: 100%; border:  1px #000 solid;">
+                <table  style="width: 100%; border:  1px #000 solid; text-align: center;">
                 <tr>
                     <th>
                        Name of Institution 
@@ -222,27 +222,31 @@
                     </th>
 
                 </tr>
-                <tr>
-                  <td>
-                      ll
-                  </td>
-                  <td>
-                    yy  
-                  </td>
-                  <td>
-                      kk
-                  </td>
-                  <td>
-                      ll
-                  </td>
-                  <td>
-                    jj  
-                  </td>
-                  <td>
-                      hh
-                  </td>
-                </tr>
-
+                <?php foreach($student->student_educations as $edu_row){
+                        if($edu_row->institution_name != ""){
+                        ?>
+                            <tr>
+                              <td>
+                                  <?php echo $edu_row->institution_name;?>
+                              </td>
+                              <td>
+                                <?php echo $edu_row->location;?> 
+                              </td>
+                              <td>
+                                  <?php echo date("Y-m-d",  strtotime($edu_row->date_of_entering));?>
+                              </td>
+                              <td>
+                                  <?php echo date("Y-m-d",  strtotime($edu_row->date_of_leaving));?>
+                              </td>
+                              <td>
+                                <?php echo $edu_row->degree_receive;?>   
+                              </td>
+                              <td>
+                                  <?php echo $edu_row->grade;?> 
+                              </td>
+                            </tr>
+                        <?php }
+                    }?>
                 
           </table>
            <table style="width: 100%;" >
@@ -270,14 +274,31 @@
                             <td style="width:50%"><b>Major in Undergraduate Studies:</b></td>
                             <td ><b>Major in Graduate Studies:</b></td>
                         </tr>
+                        <?php 
+                        $subjects = $student->student_pre_major_subjects->toArray();
+                        //echo "<pre>";
+                        //print_r($subjects);
+                        //echo "</pre>";
+                        for( $i = 0; $i<=3; $i++ ){
+                            $pre_sub_row = $subjects[$i];
+                        ?>
                         <tr>
                             <td class=" table_right_cell_line">
-                                 Sub one
+                                 <?php 
+                                    if($pre_sub_row['subject_type'] == "undergraduate"){
+                                        echo $pre_sub_row['subject_name'];
+                                    }?>
                             </td>
                             <td class=" table_right_cell_line">
-                                sub twoo
+                                <?php 
+                                    $pre_sub_row = $subjects[$i+4];
+                                     if($pre_sub_row['subject_type'] == "graduate"){
+                                        echo $pre_sub_row['subject_name'];
+                                    }?>
                             </td>
                         </tr>
+                        <?php 
+                        }?>
                      </table>
                     </td>
                 </tr>
@@ -321,24 +342,25 @@
                              <td class="col-md-2">Speaking</td>
                              <td class="col-md-2">Listening</td>
                          </tr>
+                         <?php foreach($student->student_language_ratings as $rat_row){?>
                          <tr>
                              <td class="col-md-4">
-                                 Urdu
+                                <?php echo $rat_row->language_name;?>
                              </td>
                              <td class="col-md-2">
-                                 E
+                                <?php echo $rat_row->reading;?>
                              </td>
                              <td class="col-md-2">
-                                 E
+                                <?php echo $rat_row->writing;?>
                              </td>
                              <td class="col-md-2">
-                                 E
+                                <?php echo $rat_row->speaking;?>
                              </td>
                              <td class="col-md-2">
-                                 E
+                                <?php echo $rat_row->listening;?>
                              </td>
                          </tr>
-                         
+                         <?php }?>
                      </table>
                  </td>
              </tr>
@@ -420,7 +442,7 @@
                                         Dated:
                                     </td>
                                     <td class=" table_right_cell_line">
-                                       <?php echo $student->sponsor_sign_date;?>
+                                        <?php echo date("Y-m-d",  strtotime($student->sponsor_sign_date));?>
                                     </td>
                                     <td class=" table_left_cell_without_width">
                                        Day of
@@ -467,7 +489,7 @@
                           {{ Form::label('title','Dated:')}}
                         </td>
                         <td class=" table_right_cell_line">
-                            <?php echo $student->admission_date;?>
+                            <?php echo date("Y-m-d",  strtotime($student->admission_date));?>
                         </td>
                     </tr>
                 </table>
@@ -514,7 +536,7 @@
                                        Dated: 
                                     </td>
                                     <td class=" table_right_cell_line">
-                                        <?php echo $student->fee_code_date;?>
+                                        <?php echo date("Y-m-d",  strtotime($student->fee_code_date));?>
                                     </td>
                                 </tr>
                             </table>

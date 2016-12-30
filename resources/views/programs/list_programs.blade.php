@@ -34,13 +34,29 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
 </script>
 <script type="text/javascript">
     $(document).ready(function(){
+        
+        $.getJSON( "all_departments_in_json", function( json ) {
+                var $select = $('#department');  
+                $select.find('option').remove(); 
+                $.each( json, function( index, value ) {
+                    //console.log( "JSON Data: " + key + " val "+ val.department );
+                    //$select.append('<option value=' + key + '>' + value + '</option>');  
+                    $("#department").append($('<option>').text(value.department_name).attr('value', value.id));
+                  });
+                 
+                  
+           });
+        
         function setVisitor(program_id){
             $("#program_edit_id").val(program_id);
         }
         $(".edit_button").click(function(){
             var id = $("#program_edit_id").val();
             //console.log( "JSON Data: " + id + " val "+ id );
-            $.getJSON( "program_in_json?id="+id, function( json ) {
+        //     
+        
+        
+        $.getJSON( "program_in_json?id="+id, function( json ) {
                 //$("#program_id").val(json.id);
                 $("#program_name").val(json.program_name);
                 $("#duration").val(json.duration).change();
@@ -51,6 +67,9 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                   //});
                 
            });
+           
+           
+           
         });
         $("#visitor_table").dataTable();
     });
@@ -163,7 +182,7 @@ $('#confirmDelete').on('show.bs.modal', function (e) {
                               <td>
                                   <div class = "form-group">
                                     <label for = "firstname" class = "col-md-4 control-label">
-                                         {{ Form::label('title','Program:')}}
+                                         {{ Form::label('title','Department:')}}
                                     </label>
 
                                    <div class = "col-md-7">

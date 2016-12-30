@@ -45,4 +45,7 @@ class DepartmentController extends Controller
     public function department_in_json(Request $request){
         return Department::find($request->id)->toJson();
     }
+    public function all_department_in_json(){
+        return Department::where("status","=","Active")->get()->toJson();
+    }
 }

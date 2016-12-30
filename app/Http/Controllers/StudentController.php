@@ -121,7 +121,7 @@ class StudentController extends Controller
         $student->visitor_id    = $request->get('visitor_id');
         $student->first_name    = $request->get('first_name');
         $student->last_name     = $request->get('last_name');
-        $student->program       = $request->get('program');
+        $student->program_id       = $request->get('program');
         $student->semester      = $request->get('semester');
         //$student->information_source = $request->get('information_source');
         $student->mobile        = $request->get('mobile');

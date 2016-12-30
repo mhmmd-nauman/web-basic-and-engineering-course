@@ -46,6 +46,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/add_department','DepartmentController@add_department');
     Route::post('/remove_department','DepartmentController@remove_department');
     Route::get('/department_in_json','DepartmentController@department_in_json');
+    Route::get('/all_departments_in_json','DepartmentController@all_department_in_json');
     // end of department routes
     
     // program routes
@@ -53,6 +54,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/add_program','ProgramOfferedController@add_program');
     Route::post('/remove_program','ProgramOfferedController@remove_program');
     Route::get('/program_in_json','ProgramOfferedController@program_in_json');
+    Route::get('/all_programs_in_json','ProgramOfferedController@all_programs_in_json');
     // end of program routes
     
     

@@ -47,4 +47,8 @@ class ProgramOfferedController extends Controller
         return ProgramOffered::find($request->id)->toJson();
     }
     
+    public function all_programs_in_json(){
+        return ProgramOffered::where("status","=","Active")->get()->toJson();
+    }
+    
 }
