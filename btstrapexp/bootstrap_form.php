@@ -17,7 +17,9 @@ and open the template in the editor.
    </head>
     <body>
         <div class="container">
-            
+            <div class="row">
+                <h1>Vertical Form</h1>
+            </div>
             <div class="row">
                 
                 <div class="col-md-6" >
@@ -50,6 +52,9 @@ and open the template in the editor.
              
             
          </div>
+            <div class="row">
+                <h1>Horizontal Form</h1>
+            </div>
             <div class="row">
                  <div class="col-md-6">
                 <form class = "form-horizontal" role = "form">

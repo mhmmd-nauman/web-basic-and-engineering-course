@@ -1,4 +1,4 @@
-<?php
+
 
 namespace API\v1\Services;
 
